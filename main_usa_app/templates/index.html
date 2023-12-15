@@ -70,90 +70,90 @@
                 </div>
                 <div class="row g-4">
                     <div class="col-lg-3 col-sm-6 wow fadeInUp" data-wow-delay="0.1s">
-                        <a class="cat-item d-block bg-light text-center rounded p-3" href="">
+                        <a class="cat-item d-block bg-light text-center rounded p-3" href="{% url 'job_list_by_type' job_type='marketing' %}">
                             <div class="rounded p-4">
                                 <div class="icon mb-3">
                                     <img class="img-fluid" src="{% static 'img/icon-apartment.png' %}" alt="Icon">
                                 </div>
                                 <h6>Marketing</h6>
-                                <span>(5 open positions)</span>
+                                <span>({{no_marketing}} open positions)</span>
                             </div>
                         </a>
                     </div>
                     <div class="col-lg-3 col-sm-6 wow fadeInUp" data-wow-delay="0.3s">
-                        <a class="cat-item d-block bg-light text-center rounded p-3" href="">
+                        <a class="cat-item d-block bg-light text-center rounded p-3" href="{% url 'job_list_by_type' job_type='design' %}">
                             <div class="rounded p-4">
                                 <div class="icon mb-3">
                                     <img class="img-fluid" src="{% static 'img/icon-villa.png' %}" alt="Icon">
                                 </div>
                                 <h6>Design</h6>
-                                <span>(7 open positions)</span>
+                                <span>({{no_design}} open positions)</span>
                             </div>
                         </a>
                     </div>
                     <div class="col-lg-3 col-sm-6 wow fadeInUp" data-wow-delay="0.5s">
-                        <a class="cat-item d-block bg-light text-center rounded p-3" href="">
+                        <a class="cat-item d-block bg-light text-center rounded p-3" href="{% url 'job_list_by_type' job_type='development' %}">
                             <div class="rounded p-4">
                                 <div class="icon mb-3">
                                     <img class="img-fluid" src="{% static 'img/icon-house.png' %}" alt="Icon">
                                 </div>
                                 <h6>Development</h6>
-                                <span>(6 open positions)</span>
+                                <span>({{no_development}} open positions)</span>
                             </div>
                         </a>
                     </div>
                     <div class="col-lg-3 col-sm-6 wow fadeInUp" data-wow-delay="0.7s">
-                        <a class="cat-item d-block bg-light text-center rounded p-3" href="">
+                        <a class="cat-item d-block bg-light text-center rounded p-3" href="{% url 'job_list_by_type' job_type='customer' %}">
                             <div class="rounded p-4">
                                 <div class="icon mb-3">
                                     <img class="img-fluid" src="{% static 'img/icon-housing.png' %}" alt="Icon">
                                 </div>
                                 <h6>Customer</h6>
-                                <span>(4 open positions)</span>
+                                <span>({{no_customer}} open positions)</span>
                             </div>
                         </a>
                     </div>
                     <div class="col-lg-3 col-sm-6 wow fadeInUp" data-wow-delay="0.1s">
-                        <a class="cat-item d-block bg-light text-center rounded p-3" href="">
+                        <a class="cat-item d-block bg-light text-center rounded p-3" href="{% url 'job_list_by_type' job_type='health_caare' %}">
                             <div class="rounded p-4">
                                 <div class="icon mb-3">
                                     <img class="img-fluid" src="{% static 'img/icon-building.png' %}" alt="Icon">
                                 </div>
                                 <h6>Health and Caare</h6>
-                                <span>(3 open positions)</span>
+                                <span>({{no_health_caare}} open positions)</span>
                             </div>
                         </a>
                     </div>
                     <div class="col-lg-3 col-sm-6 wow fadeInUp" data-wow-delay="0.3s">
-                        <a class="cat-item d-block bg-light text-center rounded p-3" href="">
+                        <a class="cat-item d-block bg-light text-center rounded p-3" href="{% url 'job_list_by_type' job_type='automotive' %}">
                             <div class="rounded p-4">
                                 <div class="icon mb-3">
                                     <img class="img-fluid" src="{% static 'img/icon-neighborhood.png' %}" alt="Icon">
                                 </div>
                                 <h6>Automotive jobs</h6>
-                                <span>(7 open positions)</span>
+                                <span>({{no_automotive}} open positions)</span>
                             </div>
                         </a>
                     </div>
                     <div class="col-lg-3 col-sm-6 wow fadeInUp" data-wow-delay="0.5s">
-                        <a class="cat-item d-block bg-light text-center rounded p-3" href="">
+                        <a class="cat-item d-block bg-light text-center rounded p-3" href="{% url 'job_list_by_type' job_type='data_entry' %}">
                             <div class="rounded p-4">
                                 <div class="icon mb-3">
                                     <img class="img-fluid" src="{% static 'img/icon-condominium.png' %}" alt="Icon">
                                 </div>
                                 <h6>Data entry</h6>
-                                <span>(1 open positions)</span>
+                                <span>({{no_data_entry}} open positions)</span>
                             </div>
                         </a>
                     </div>
                     <div class="col-lg-3 col-sm-6 wow fadeInUp" data-wow-delay="0.7s">
-                        <a class="cat-item d-block bg-light text-center rounded p-3" href="">
+                        <a class="cat-item d-block bg-light text-center rounded p-3" href="{% url 'job_list_by_type' job_type='call_center' %}">
                             <div class="rounded p-4">
                                 <div class="icon mb-3">
                                     <img class="img-fluid" src="{% static 'img/icon-luxury.png' %}" alt="Icon">
                                 </div>
                                 <h6>call center</h6>
-                                <span>(8 open positions)</span>
+                                <span>({{no_call_center}} open positions)</span>
                             </div>
                         </a>
                     </div>

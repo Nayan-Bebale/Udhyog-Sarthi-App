@@ -45,3 +45,31 @@ class Job(models.Model):
 
     def __str__(self):
         return self.job_title
+    
+
+
+class JobSeeker(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    id_user = models.AutoField(primary_key=True)
+    bio = models.TextField(blank=True)
+    profileimg = models.ImageField(upload_to='profile_images', default='blank-profile-pic.png')
+    location = models.CharField(max_length=100, blank=True)
+    dob = models.DateField(null=True, blank=True)
+    city = models.CharField(max_length=100, blank=True)
+    udid = models.CharField(max_length=50, blank=True)
+    phone_number = models.CharField(max_length=15, blank=True)
+    about = models.CharField(max_length=500, blank=True)
+    skills = models.CharField(max_length=100, blank=True)
+    dis_type = models.CharField(max_length=30)
+
+
+    def __str__(self):
+        return self.user.username
+
+class Contributor(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    bio = models.TextField(blank=True)
+    profileimg = models.ImageField(upload_to='profile_images', default='blank-profile-pic.png')
+
+    def __str__(self):
+        return self.user.username

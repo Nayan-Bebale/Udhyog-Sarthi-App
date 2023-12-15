@@ -1,16 +1,38 @@
 from django.shortcuts import render, redirect
 from .forms import JobForm
 from django.contrib.admin.views.decorators import staff_member_required
-from .models import Job
+from .models import Job, JobSeeker, Contributor
+from django.contrib.auth import authenticate, logout
+from django.contrib.auth.models import User
+from django.contrib import messages
+from django.contrib.auth import login as auth_login
+from django.contrib.auth.decorators import login_required
+
+
 
 # Create your views here.
 
 def index(request):
 
     jobs = Job.objects.all()
-    
+    no_marketing = len(Job.objects.filter(job_type='marketing'))
+    no_design = len(Job.objects.filter(job_type='design'))
+    no_development = len(Job.objects.filter(job_type='development'))
+    no_customer = len(Job.objects.filter(job_type='customer'))
+    no_health_caare = len(Job.objects.filter(job_type='health_caare'))
+    no_automotive = len(Job.objects.filter(job_type='automotive'))
+    no_data_entry = len(Job.objects.filter(job_type='data_entry'))
+    no_call_center = len(Job.objects.filter(job_type='call_center'))
     context = {
         'jobs': jobs, 
+        'no_marketing': no_marketing,
+        'no_design': no_design,
+        'no_development': no_development,
+        'no_customer': no_customer,
+        'no_health_caare': no_health_caare,
+        'no_automotive': no_automotive,
+        'no_data_entry':no_data_entry,
+        'no_call_center':no_call_center,
     }
     template_name = "index.html"
     return render(request, template_name, context)
@@ -26,6 +48,64 @@ def about(request):
 def login(request):
     template_name = "login.html"
     return render(request, template_name)
+
+def signup(request):
+    if request.method == 'POST':
+        username = request.POST['username']
+        email = request.POST['email']
+        user_type = request.POST['type']
+        password = request.POST['password']
+        
+        # Check if the user already exists
+        if User.objects.filter(username=username).exists():
+            messages.error(request, 'User with this UDID already exists.')
+            return redirect('login')  # Replace 'signup' with the name of your sign-up URL
+
+        # Create a new user
+        user = User.objects.create_user(username=username, email=email, password=password)
+        user.save()
+
+        # Perform additional steps based on user type (jobseeker or contributor)
+        if user_type == 'jobseeker':
+            # Create a jobseeker profile or perform other actions as needed
+            JobSeeker.objects.create(user=user)
+            return redirect('profile')
+        
+        elif user_type == 'contributor':
+            # Create a contributor profile or perform other actions as needed
+            Contributor.objects.create(user=user)
+            return redirect('contributor')
+
+        messages.success(request, 'Account created successfully. You can now sign in.')
+        return redirect('login')  # Replace 'signin' with the name of your sign-in URL
+
+    else:
+        return render(request, 'login.html')  # Replace 'login.html' with the actual path to your login template
+
+def signin(request):
+    if request.method == 'POST':
+        name = request.POST['name']
+        password = request.POST['password']
+        user = authenticate(request, username=name, password=password)
+
+        if user is not None:
+            auth_login(request, user)  # Use the imported login function from django.contrib.auth
+            messages.success(request, 'Login successful.')
+
+            if JobSeeker.objects.filter(user=user).exists():
+                return redirect('profile')
+            elif Contributor.objects.filter(user=user).exists():
+                return('contributor')
+                # Replace 'profile' with the name of your profile view
+        else:
+            messages.error(request, 'Invalid Name or password.')
+            return redirect('login')  # Replace 'signin' with the name of your sign-in URL
+    else:
+        return render(request, 'login.html')# Replace 'login.html' with the actual path to your login template
+
+def signout(request):
+    logout(request)
+    return redirect('index')
 
 def property_list(request):
     part_time_jobs = Job.objects.filter(time='part_time')
@@ -53,6 +133,48 @@ def testimonial(request):
     template_name = "testimonial.html"
     return render(request, template_name)
 
+def job_list_by_type(request, job_type):
+    jobs = Job.objects.filter(job_type=job_type)
+
+    if job_type == 'marketing':
+        job_name = 'Marketing Jobs'
+        about = "Eirmod sed ipsum dolor sit rebum labore magna erat. Tempor ut dolore lorem kasd vero ipsum sit eirmod sit diam justo sed rebum. 1"
+    elif job_type == 'design':
+        job_name = 'Design Jobs'
+        about = "Eirmod sed ipsum dolor sit rebum labore magna erat. Tempor ut dolore lorem kasd vero ipsum sit eirmod sit diam justo sed rebum. 2"
+    elif job_type == 'development':
+        job_name = 'Development Jobs'
+        about = "Eirmod sed ipsum dolor sit rebum labore magna erat. Tempor ut dolore lorem kasd vero ipsum sit eirmod sit diam justo sed rebum. 3"
+    elif job_type == 'customer':
+        job_name = 'Customer Jobs'
+        about = "Eirmod sed ipsum dolor sit rebum labore magna erat. Tempor ut dolore lorem kasd vero ipsum sit eirmod sit diam justo sed rebum. 4"
+    elif job_type == 'health_caare':
+        job_name = 'Health and Caare Jobs'
+        about = "Eirmod sed ipsum dolor sit rebum labore magna erat. Tempor ut dolore lorem kasd vero ipsum sit eirmod sit diam justo sed rebum. 5"
+    elif job_type == 'automotive':
+        job_name = 'Automotive Jobs'
+        about = "Eirmod sed ipsum dolor sit rebum labore magna erat. Tempor ut dolore lorem kasd vero ipsum sit eirmod sit diam justo sed rebum. 6"
+    elif job_type == 'data_entry':
+        job_name = 'Data Entry Jobs'
+        about = "Eirmod sed ipsum dolor sit rebum labore magna erat. Tempor ut dolore lorem kasd vero ipsum sit eirmod sit diam justo sed rebum. 7"
+    elif job_type == 'call_center':
+        job_name = 'Call Center Jobs'
+        about = "Eirmod sed ipsum dolor sit rebum labore magna erat. Tempor ut dolore lorem kasd vero ipsum sit eirmod sit diam justo sed rebum. 8"
+    
+
+    template_name = "type_jobs.html"
+    context = {
+        'jobs':jobs,
+        'job_name':job_name,
+        'about':about,
+    }
+    return render(request, template_name, context)
+
+
+def blogs(request):
+    template_name = "blogs.html"
+    return render(request, template_name)
+
 
 @staff_member_required
 def post_job(request):
@@ -68,3 +190,44 @@ def post_job(request):
         form = JobForm()
 
     return render(request, 'post_job.html', {'form': form})
+
+
+@login_required
+def profile(request):
+    template_name = "profile.html"
+    return render(request, template_name)
+
+
+@login_required
+def contributor(request):
+    template_name = "contributor.html"
+    return render(request, template_name)
+
+
+@login_required
+def jobseeker_jobs(request):
+
+    jobs = Job.objects.all()
+    no_marketing = Job.objects.filter(job_type='marketing')
+    no_design = Job.objects.filter(job_type='design')
+    no_development = Job.objects.filter(job_type='development')
+    no_customer = Job.objects.filter(job_type='customer')
+    no_health_caare = Job.objects.filter(job_type='health_caare')
+    no_automotive = Job.objects.filter(job_type='automotive')
+    no_data_entry = Job.objects.filter(job_type='data_entry')
+    no_call_center = Job.objects.filter(job_type='call_center')
+    context = {
+        'jobs': jobs, 
+        'marketing': no_marketing,
+        'design': no_design,
+        'development': no_development,
+        'customer': no_customer,
+        'health_caare': no_health_caare,
+        'automotive': no_automotive,
+        'data_entry':no_data_entry,
+        'call_center':no_call_center,
+    }
+    template_name = "jobseeker_jobs.html"
+    return render(request, template_name, context)
+
+
