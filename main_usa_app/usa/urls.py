@@ -19,6 +19,7 @@ urlpatterns = [
     path('contact/', views.contect, name="contect"),
     path('about/', views.about, name="about"),
     path('blogs/', views.blogs, name="blogs"),
+    path('courses/', views.courses, name="courses"),
 
 
     path('profile/', views.profile, name="profile"),

@@ -14,6 +14,8 @@ from django.contrib.admin.views.decorators import staff_member_required
 
 # Create your views here.
 
+# Landing Page
+
 def index(request):
 
     jobs = Job.objects.all()
@@ -97,7 +99,7 @@ def signin(request):
             if JobSeeker.objects.filter(user=user).exists():
                 return redirect('profile')
             elif Contributor.objects.filter(user=user).exists():
-                return('contributor')
+                return redirect('contributor')
                 # Replace 'profile' with the name of your profile view
         else:
             messages.error(request, 'Invalid Name or password.')
@@ -177,6 +179,12 @@ def blogs(request):
     template_name = "blogs.html"
     return render(request, template_name)
 
+
+def courses(request):
+    template_name = "courses.html"
+    return render(request, template_name)
+
+# Staff memmber 
 
 @staff_member_required
 def post_job(request):
@@ -286,3 +294,5 @@ def delete_save_job(request, job_id):
         save_job.delete()
 
     return redirect('list_save_job')
+
+

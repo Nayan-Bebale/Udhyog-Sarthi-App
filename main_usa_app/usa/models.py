@@ -1,5 +1,4 @@
 from django.db import models
-from django.contrib.auth import get_user_model
 from django.utils import timezone
 from django.contrib.auth.models import User
 
@@ -55,7 +54,7 @@ class JobSeeker(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     id_user = models.AutoField(primary_key=True)
     bio = models.TextField(blank=True)
-    profileimg = models.ImageField(upload_to='profile_images', default='blank-profile-pic.png')
+    profileimg = models.ImageField(upload_to='profile_images/', default='blank-profile-pic.png')
     location = models.CharField(max_length=100, blank=True)
     dob = models.DateField(null=True, blank=True)
     city = models.CharField(max_length=100, blank=True)
@@ -64,7 +63,7 @@ class JobSeeker(models.Model):
     about = models.CharField(max_length=500, blank=True)
     skills = models.CharField(max_length=100, blank=True)
     dis_type = models.CharField(max_length=30)
-
+    
 
     def __str__(self):
         return self.user.username
@@ -86,3 +85,52 @@ class SaveJobs(models.Model):
     def __str__(self):
         return f"{self.user.username} saved {self.job.job_title}"
 
+
+
+# Course Model
+    
+class DisabilityType(models.Model):
+    name = models.CharField(max_length=255, unique=True)
+    description = models.TextField()
+
+    def __str__(self):
+        return self.name
+    
+
+
+    
+class Courses(models.Model):
+
+    # Unique identifier for the course
+    course_id = models.AutoField(primary_key=True)
+
+    title = models.CharField(max_length=255)
+    description = RichTextField()
+    instructor = models.ForeignKey(User, on_delete=models.CASCADE)
+
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+    profileimg = models.ImageField(upload_to='courses_images/', default='default_course.jpg')
+
+    
+    disability_types = models.ManyToManyField('DisabilityType', related_name='courses', blank=True)
+
+    def __str__(self):
+        return self.title
+
+
+
+class Lecture(models.Model):
+    # Foreign key referencing the Course model
+    course = models.ForeignKey(Courses, related_name='lectures', on_delete=models.CASCADE)
+    
+    # Lecture Information
+    title = models.CharField(max_length=255)
+    video_url = models.URLField()
+    description = RichTextField()
+    sequence_order = models.PositiveIntegerField()
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return f"{self.course.title} - Lecture {self.sequence_order}: {self.title}"
