@@ -1,29 +1,20 @@
+<!-- post_jobs.html -->
+{% extends 'base.html' %}
 {% load static %}
+{% block extrahead %}
+    <script>window.CKEDITOR_BASEPATH = '{% static "ckeditor/ckeditor/" %}';</script>
+    {{ block.super }}
+{% endblock %}
 
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
-    <link rel="stylesheet" href="{% static 'login/style.css' %}">
-    <title>Landing_page</title>
-</head>
-<body>
-
-
-    <div >
+{% block content %}
+    <div>
         <form method="post" enctype="multipart/form-data">
             {% csrf_token %}
+            {{ form.media }}
             {{ form.as_p }}
             <button type="submit">Post Job</button>
-          </form>
-        
+        </form>
     </div>
+{% endblock %}
 
 
-    <script src="{% static 'login\script.js' %}"></script>
-</body>
-
-</html>

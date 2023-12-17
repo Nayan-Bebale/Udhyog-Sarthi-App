@@ -1,12 +1,14 @@
 from django.shortcuts import render, redirect
+from django.shortcuts import get_object_or_404
+
 from .forms import JobForm
-from django.contrib.admin.views.decorators import staff_member_required
-from .models import Job, JobSeeker, Contributor
+from .models import Job, JobSeeker, Contributor, SaveJobs
 from django.contrib.auth import authenticate, logout
 from django.contrib.auth.models import User
 from django.contrib import messages
 from django.contrib.auth import login as auth_login
 from django.contrib.auth.decorators import login_required
+from django.contrib.admin.views.decorators import staff_member_required
 
 
 
@@ -192,19 +194,32 @@ def post_job(request):
     return render(request, 'post_job.html', {'form': form})
 
 
-@login_required
+# Jobseeker Profile
+@login_required(login_url='login')
 def profile(request):
     template_name = "profile.html"
     return render(request, template_name)
 
 
-@login_required
+
+@login_required(login_url='login')
+def edit_jobseeker_profile(request):
+    user_profile = JobSeeker.objects.get(user=request.user)
+
+    context = {
+        'user_profile': user_profile,
+        }
+    template_name = "edit-user-profile.html"
+    return render(request, template_name, context)
+
+
+@login_required(login_url='login')
 def contributor(request):
     template_name = "contributor.html"
     return render(request, template_name)
 
 
-@login_required
+@login_required(login_url='login')
 def jobseeker_jobs(request):
 
     jobs = Job.objects.all()
@@ -231,3 +246,43 @@ def jobseeker_jobs(request):
     return render(request, template_name, context)
 
 
+@login_required(login_url='login')
+def save_job(request, job_id):
+    job = Job.objects.get(pk=job_id)
+    user = request.user
+
+    # Check if the job is already saved by the user
+    if not SaveJobs.objects.filter(user=user, job=job).exists():
+        SaveJobs.objects.create(user=user, job=job)
+
+    return redirect('jobseeker_jobs')
+
+
+
+@login_required(login_url='login')
+def list_save_job(request):
+    save_jobs = SaveJobs.objects.filter(user=request.user).select_related('job')
+    
+    # Extract the job instances from the queryset
+    saved_jobs = [save_job.job for save_job in save_jobs]
+
+    context = {
+        'saved': saved_jobs,
+    }
+    template_name = "saved_jobs.html"
+    return render(request, template_name, context)
+
+
+@login_required(login_url='login')
+def delete_save_job(request, job_id):
+    job = get_object_or_404(Job, pk=job_id)
+    user = request.user
+
+    # Check if the job is already saved by the user
+    save_job = SaveJobs.objects.filter(user=user, job=job).first()
+
+    # Check if the save_job exists before attempting to delete
+    if save_job:
+        save_job.delete()
+
+    return redirect('list_save_job')

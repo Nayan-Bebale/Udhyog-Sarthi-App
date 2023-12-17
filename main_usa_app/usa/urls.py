@@ -22,9 +22,14 @@ urlpatterns = [
 
 
     path('profile/', views.profile, name="profile"),
+    path('edit-jobseeker-profile/', views.edit_jobseeker_profile, name="edit_jobseeker_profile"),
     path('contributor/', views.contributor, name="contributor"),
 
 
     path('jobseeker-jobs/', views.jobseeker_jobs, name="jobseeker_jobs"),
+
+    path('list-saved-jobs/', views.list_save_job, name="list_save_job"),
+    path('saved-jorb/<str:job_id>', views.save_job, name="save_job"),
+    path('delete-saved-jorb/<str:job_id>', views.delete_save_job, name="delete_save_job"),
 
 ]

@@ -1,5 +1,6 @@
 from django import forms
 from .models import Job
+from ckeditor.widgets import CKEditorWidget
 
 class JobForm(forms.ModelForm):
     class Meta:
@@ -22,4 +23,4 @@ class JobForm(forms.ModelForm):
         super(JobForm, self).__init__(*args, **kwargs)
         # You can customize the form fields if needed
         # For example, add CSS classes or change widget attributes
-        self.fields['about'].widget = forms.Textarea(attrs={'rows': 4})
+        self.fields['about'].widget = CKEditorWidget()

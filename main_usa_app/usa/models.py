@@ -1,7 +1,10 @@
 from django.db import models
 from django.contrib.auth import get_user_model
+from django.utils import timezone
+from django.contrib.auth.models import User
 
-User = get_user_model()
+from ckeditor.fields import RichTextField
+
 # Create your models here.
 
 class Job(models.Model):
@@ -38,7 +41,7 @@ class Job(models.Model):
     categories = models.CharField(max_length=10, choices=categories_choices)
     salary = models.DecimalField(max_digits=10, decimal_places=2)
     hours = models.PositiveIntegerField()
-    about = models.TextField()
+    about = RichTextField()
     day_ago = models.PositiveIntegerField()
     image = models.ImageField(upload_to='job_images/', default='D:\main_usa_app\main_usa_app\main_usa_app\media\default_job_banner.jpg')
     posted_by = models.ForeignKey('auth.User', on_delete=models.CASCADE)
@@ -73,3 +76,13 @@ class Contributor(models.Model):
 
     def __str__(self):
         return self.user.username
+
+
+class SaveJobs(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    job = models.ForeignKey(Job, on_delete=models.CASCADE)
+    saved_at = models.DateTimeField(default=timezone.now)
+
+    def __str__(self):
+        return f"{self.user.username} saved {self.job.job_title}"
+
