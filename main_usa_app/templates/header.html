@@ -35,6 +35,7 @@
     <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
 
     <link href="{% static 'css/style.css' %}" rel="stylesheet">
+    <link href="{% static 'css/customThemeClass.css' %}" rel="stylesheet">
 </head>
 
 <body>
@@ -60,6 +61,12 @@
                 <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
                     <span class="navbar-toggler-icon"></span>
                 </button>
+                    <div class="d-flex justify-content-center align-items-center">
+                            <div class="d-flex gap-4">
+                                <input type="checkbox" class="btn-check" id="btn-theme-change" autocomplete="off">
+                                <label class="btn btn-outline-primary" for="btn-theme-change" id="btn-theme-change-label">Dark</label>
+                            </div>
+                    </div>
                 <div class="d-flex p-4 justify-content-between align-items-center">
                     <button class="btn btn-sm btn-medium p-2 px-3 py-2 rounded-md text-black bg-gray-700 hover:bg-gray-800 hover-text-black" id="increase-font-size">A+</button>
                     <button class="btn btn-sm btn-medium p-2 px-3 py-2 rounded-md text-black bg-gray-700 hover:bg-gray-800 hover-text-black" id="decrease-font-size">A-</button>
