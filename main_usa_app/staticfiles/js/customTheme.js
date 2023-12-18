@@ -11,7 +11,7 @@ const themes = {
 
 const backgroundColors = {
 	[themes.white]: "bg-white",
-	[themes.dark]: "bg-black",
+	[themes.dark]: "bg-dark",
 	[themes.yellow]: "bg-warning",
 	[themes.blue]: "bg-primary",
 };
@@ -23,7 +23,7 @@ const textColors = {
 };
 const navThemes = {
 	[themes.white]: "custom-bg-blue-900",
-	[themes.yellow]: "bg-black",
+	[themes.yellow]: "bg-dark",
 	[themes.blue]: "custom-bg-orange",
 	[themes.dark]: "custom-bg-yellow-300",
 };
@@ -37,8 +37,6 @@ const initializeTheme = (theme = "") => {
 	// remove existing classes first
 	$("body").removeClass()
 	$("#main-section").removeClass();
-	$("#theme-navbar").removeClass();
-	Object.keys(themes).forEach((key) => $(`#${key}-theme`).removeClass("bg-gray-900"));
 
 	if (!theme && !localStorage.getItem("theme")) theme = "white";
 	else if (localStorage.getItem("theme") && !theme) theme = localStorage.getItem("theme");
