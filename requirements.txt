@@ -1,0 +1,8 @@
+django
+functools
+argparse
+pycopy-pkgutil
+importlib
+django-ckeditor
+Pillow
+colorama
