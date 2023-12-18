@@ -1,0 +1,56 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block extrahead %}
+    <script>window.CKEDITOR_BASEPATH = '{% static "ckeditor/ckeditor/" %}';</script>
+    {{ block.super }}
+{% endblock %}
+
+{% block content %}
+  <h2>Create Course with Lectures</h2>
+  <form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ form.media }}
+    {{ course_form.as_p }}
+    {{ formset.management_form }}
+    <div id="formset">
+      {% for form in formset %}
+        {{ form.as_p }}
+      {% endfor %}
+    </div>
+    <button type="button" id="add-form">Add Lecture</button>
+    <button type="button" id="remove-form">Remove Last Lecture</button>
+    <button type="submit">Save</button>
+  </form>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const formset = document.getElementById('formset');
+      const addFormButton = document.getElementById('add-form');
+      const removeFormButton = document.getElementById('remove-form');
+      
+      let formCount = formset.children.length;
+  
+      addFormButton.addEventListener('click', function() {
+        const newForm = formset.firstElementChild.cloneNode(true);
+        formCount++;
+        updateFormIndices(newForm, formCount);
+        formset.appendChild(newForm);
+      });
+  
+      removeFormButton.addEventListener('click', function() {
+        const forms = formset.children;
+        if (forms.length > 1) {
+          formset.removeChild(forms[forms.length - 1]);
+          formCount--;
+        }
+      });
+  
+      function updateFormIndices(form, index) {
+        form.innerHTML = form.innerHTML.replace(/form-0/g, 'form-' + index);
+        form.innerHTML = form.innerHTML.replace(/form-TOTAL_FORMS-0/g, 'form-TOTAL_FORMS-' + index);
+      }
+    });
+  </script>
+  
+  
+{% endblock %}

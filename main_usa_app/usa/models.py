@@ -38,12 +38,15 @@ class Job(models.Model):
         ('private', 'Private'),
     ]
     categories = models.CharField(max_length=10, choices=categories_choices)
+    disability_types = models.ManyToManyField('DisabilityType', related_name='jobs', blank=True)
     salary = models.DecimalField(max_digits=10, decimal_places=2)
     hours = models.PositiveIntegerField()
-    about = RichTextField()
+    about = models.TextField()
     day_ago = models.PositiveIntegerField()
     image = models.ImageField(upload_to='job_images/', default='D:\main_usa_app\main_usa_app\main_usa_app\media\default_job_banner.jpg')
     posted_by = models.ForeignKey('auth.User', on_delete=models.CASCADE)
+
+
 
     def __str__(self):
         return self.job_title
@@ -52,6 +55,7 @@ class Job(models.Model):
 
 class JobSeeker(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
+    username = models.TextField(max_length=30)
     id_user = models.AutoField(primary_key=True)
     bio = models.TextField(blank=True)
     profileimg = models.ImageField(upload_to='profile_images/', default='blank-profile-pic.png')
@@ -61,7 +65,7 @@ class JobSeeker(models.Model):
     udid = models.CharField(max_length=50, blank=True)
     phone_number = models.CharField(max_length=15, blank=True)
     about = models.CharField(max_length=500, blank=True)
-    skills = models.CharField(max_length=100, blank=True)
+
     dis_type = models.CharField(max_length=30)
     
 
@@ -110,7 +114,7 @@ class Courses(models.Model):
 
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
-    profileimg = models.ImageField(upload_to='courses_images/', default='default_course.jpg')
+    courseimg = models.ImageField(upload_to='courses_images/', default='default_course.jpg')
 
     
     disability_types = models.ManyToManyField('DisabilityType', related_name='courses', blank=True)
@@ -134,3 +138,15 @@ class Lecture(models.Model):
 
     def __str__(self):
         return f"{self.course.title} - Lecture {self.sequence_order}: {self.title}"
+
+
+class Blogs(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    id_blog = models.AutoField(primary_key=True)
+    abstraction = models.TextField(max_length=250, blank=True)
+    disability_types = models.ManyToManyField('DisabilityType', related_name='blogs', blank=True)
+
+    content = RichTextField()
+    tumbnail = models.ImageField(upload_to='blogs_images/', default='default_blogs.jpg')
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)

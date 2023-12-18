@@ -1,8 +1,14 @@
 from django.shortcuts import render, redirect
 from django.shortcuts import get_object_or_404
 
-from .forms import JobForm
-from .models import Job, JobSeeker, Contributor, SaveJobs
+from .forms import JobForm, CourseForm, LectureForm
+from django.forms import inlineformset_factory
+from django import forms
+
+
+from .models import Job, JobSeeker, Contributor, SaveJobs, Courses, Lecture
+
+
 from django.contrib.auth import authenticate, logout
 from django.contrib.auth.models import User
 from django.contrib import messages
@@ -213,6 +219,57 @@ def profile(request):
 @login_required(login_url='login')
 def edit_jobseeker_profile(request):
     user_profile = JobSeeker.objects.get(user=request.user)
+    
+    if request.method == 'POST':
+        if request.FILES.get('image') == None:
+            image = user_profile.profileimg
+            username = user_profile.POST['username']
+            bio = user_profile.POST['bio']
+            about = user_profile.POST['about']
+            distype = user_profile.POST['distype']
+            udid = user_profile.POST['udid']
+            dob = user_profile.POST['dob']
+            phone = user_profile.POST['phone']
+            location = user_profile.POST['location']
+            city = user_profile.POST['city']
+
+            user_profile.username = username
+            user_profile.bio = bio
+            user_profile.profileimg = image
+            user_profile.about = about
+            user_profile.dis_type = distype
+            user_profile.udid = udid
+            user_profile.dob = dob
+            user_profile.phone_number = phone
+            user_profile.location = location
+            user_profile.city = city
+            user_profile.save()
+
+        if request.FILES.get('image') != None:
+            image = request.FILES.get('image')
+            username = user_profile.POST['username']
+            bio = user_profile.POST['bio']
+            about = user_profile.POST['about']
+            distype = user_profile.POST['distype']
+            udid = user_profile.POST['udid']
+            dob = user_profile.POST['dob']
+            phone = user_profile.POST['phone']
+            location = user_profile.POST['location']
+            city = user_profile.POST['city']
+
+            user_profile.username = username
+            user_profile.bio = bio
+            user_profile.profileimg = image
+            user_profile.about = about
+            user_profile.dis_type = distype
+            user_profile.udid = udid
+            user_profile.dob = dob
+            user_profile.phone_number = phone
+            user_profile.location = location
+            user_profile.city = city
+            user_profile.save()
+
+        return redirect('edit_jobseeker_profile')
 
     context = {
         'user_profile': user_profile,
@@ -296,3 +353,28 @@ def delete_save_job(request, job_id):
     return redirect('list_save_job')
 
 
+
+@login_required(login_url='login')
+def create_course_with_lectures(request):
+    CourseFormSet = inlineformset_factory(Courses, Lecture, form=LectureForm, extra=1, can_delete=False)
+
+    if request.method == 'POST':
+        course_form = CourseForm(request.POST)
+        formset = CourseFormSet(request.POST, instance=Courses())
+
+        if course_form.is_valid() and formset.is_valid():
+            course = course_form.save()
+            formset.instance = course
+            formset.save()
+
+            return redirect('contributor')
+    else:
+        course_form = CourseForm()
+        formset = CourseFormSet(instance=Courses())
+
+    return render(request, 'courses_form.html', {'course_form': course_form, 'formset': formset})
+
+
+@login_required(login_url='login')
+def post_blog(request):
+    pass
