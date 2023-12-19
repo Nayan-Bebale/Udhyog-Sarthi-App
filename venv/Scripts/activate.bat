@@ -8,7 +8,7 @@ if defined _OLD_CODEPAGE (
     "%SystemRoot%\System32\chcp.com" 65001 > nul
 )
 
-set VIRTUAL_ENV=D:\main_usa_app\main_usa_app\venv
+set VIRTUAL_ENV=D:\codes\Udhyog-Sarthi-App\venv
 
 if not defined PROMPT set PROMPT=$P$G
 
