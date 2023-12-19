@@ -36,6 +36,7 @@ const initializeTheme = (theme = "") => {
 
 	// remove existing classes first
 	$("body").removeClass()
+	$("h1").removeClass()
 	$("#main-section").removeClass();
 
 	if (!theme && !localStorage.getItem("theme")) theme = "white";
@@ -45,6 +46,8 @@ const initializeTheme = (theme = "") => {
 	themeColor = backgroundColors[theme];
 	textColor = textColors[theme];
 	$("body").addClass(themeColor);
+	$("body").addClass(textColor);
+	$("h1").addClass(`display-5 animated fadeIn mb-4 ${textColor}`);
 	$("#main-section").addClass(themeColor);
 	$("#main-section").addClass(textColor);
 	$("body").css("font-size", `${fontSize}px`);
