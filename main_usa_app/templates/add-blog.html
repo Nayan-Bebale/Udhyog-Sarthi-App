@@ -1,0 +1,59 @@
+<!-- add-blog.html -->
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block extrahead %}
+    <script>window.CKEDITOR_BASEPATH = '{% static "ckeditor/ckeditor/" %}';</script>
+    {{ block.super }}
+{% endblock %}
+
+{% block content %}
+  {% include 'contributor_sidebar.html' %}
+  
+  <section class="p-4 sm:ml-64">
+    <div class="container px-5 py-24 mx-auto flex">    
+      <form method="post" action="" enctype="multipart/form-data">
+        <div>
+            {% for message in messages %}
+                <h5>{{message}}</h5>
+            {% endfor %}
+        </div>
+        {% csrf_token %}
+        <div>
+          <label class="text-xl mb-7 place-content-center" for="image">Upload A Thumbnail:</label><br>
+          <input name="image" class="file-upload-input mb-7 rounded-md" type="file" onchange="readURL(this)" accept="Image/*"><br>
+    
+          <label for="title" class="mb-7 text-xl">Title :</label><br>
+          <input type="text" name="title" class="shadow-sm border-2 border border-black-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 mb-7" required>
+    
+          <label for="abstract" class="mb-7 text-xl">Abstract:</label><br>
+          <input type="text" name="abstract" class="shadow-sm border-2 border border-black-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 mb-7">
+    
+          <label class="text-xl" for="disability-type">Disability Type:</label><br>   
+          <select class="mb-7 rounded-md p-2 border-2 border-black-300" name="distype" id="">
+            <option value="">Choose</option>
+            {% for dtype in disability_types %}
+              <option value="{{ dtype.id }}">{{ dtype.name }}</option>
+            {% endfor %}
+          </select>
+        </div>
+    
+        <h1 class="text-xl">Content:</h1>
+        <div id="editor" style="width: 100%; height: 100%;"></div>
+
+        <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Post Blog</button>
+      </form>
+    </div>
+  </section>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.2.0/flowbite.min.js"></script>
+
+  <script>
+    ClassicEditor
+      .create(document.querySelector('#editor'))
+      .catch(error => {
+        console.error(error);
+      });
+  </script>
+{% endblock %}

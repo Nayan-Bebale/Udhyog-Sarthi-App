@@ -7,7 +7,7 @@
             <div class="row g-0 align-items-center flex-column-reverse flex-md-row">
                 <div class="col-md-6 p-5 mt-lg-5">
                     <h1 class="display-5 animated fadeIn mb-4">Find A <span class="text-primary">Perfect Job</span> To work With Your Gift</h1>
-                    <p class="animated fadeIn mb-4 pb-2">let's get started through your wonderful journey</p>
+                    <p class="animated fadeIn mb-4 pb-2" style="color: #00B98E; font-weight: 800;">दिव्य क्षमता, असीमित संभावना.</p>
                     <a href="/property-list" class="btn btn-primary py-3 px-5 me-3 animated fadeIn">Get Started</a>
                 </div>
                 <div class="col-md-6 animated fadeIn">
@@ -26,7 +26,7 @@
 
 
         <!-- Search Start -->
-        <div class="container-fluid bg-primary mb-5 wow fadeIn" data-wow-delay="0.1s" style="padding: 35px;">
+        <!-- <div class="container-fluid bg-primary mb-5 wow fadeIn" data-wow-delay="0.1s" style="padding: 35px;">
             <div class="container">
                 <div class="row g-2">
                     <div class="col-md-10">
@@ -57,9 +57,109 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </div> -->
         <!-- Search End -->
 
+        <!-- Category Start -->
+        <div class="container-xxl py-5">
+            <div class="container">
+                <div class="text-center mx-auto mb-5 wow fadeInUp" data-wow-delay="0.1s" style="max-width: 600px;">
+                    <h1 class="mb-3">Browse for Divyangjan</h1>
+                    <p>2020 jobs live - 293 added today.</p>
+                </div>
+                <div class="row g-4">
+                    <div class="col-lg-3 col-sm-6 wow fadeInUp" data-wow-delay="0.1s">
+                        <a class="cat-item d-block bg-light text-center rounded p-3" href="#">
+                            <div class="rounded p-4">
+                                <div class="icon mb-3">
+                                    <img class="img-fluid" src="{% static 'dis_img/eye.jpg' %}" alt="Icon">
+                                </div>
+                                <h6>Visual Impairment</h6>
+                                <span>(दृश्य हानि)</span>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="col-lg-3 col-sm-6 wow fadeInUp" data-wow-delay="0.3s">
+                        <a class="cat-item d-block bg-light text-center rounded p-3" href="{% url 'job_list_by_type' job_type='design' %}">
+                            <div class="rounded p-4">
+                                <div class="icon mb-3">
+                                    <img class="img-fluid" src="{% static 'dis_img/img-2.jpg' %}" alt="Icon">
+                                </div>
+                                <h6>Hearing Impairment</h6>
+                                <span>(श्रवण बाधित)</span>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="col-lg-3 col-sm-6 wow fadeInUp" data-wow-delay="0.5s">
+                        <a class="cat-item d-block bg-light text-center rounded p-3" href="{% url 'job_list_by_type' job_type='development' %}">
+                            <div class="rounded p-4">
+                                <div class="icon mb-3">
+                                    <img class="img-fluid" src="{% static 'dis_img/img-3.jpg' %}" alt="Icon">
+                                </div>
+                                <h6>Deafblindness</h6>
+                                <span>बहरापन</span>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="col-lg-3 col-sm-6 wow fadeInUp" data-wow-delay="0.3s">
+                        <a class="cat-item d-block bg-light text-center rounded p-3" href="{% url 'job_list_by_type' job_type='automotive' %}">
+                            <div class="rounded p-4">
+                                <div class="icon mb-3">
+                                    <img class="img-fluid" src="{% static 'dis_img/img-6.jpg' %}" alt="Icon">
+                                </div>
+                                <h6>Mobility Impairment</h6>
+                                <span>(गतिशीलता हानि)</span>
+                            </div>
+                        </a>
+                    </div>
+                    
+                    <div class="col-lg-3 col-sm-6 wow fadeInUp" data-wow-delay="0.1s">
+                        <a class="cat-item d-block bg-light text-center rounded p-3" href="{% url 'job_list_by_type' job_type='health_caare' %}">
+                            <div class="rounded p-4">
+                                <div class="icon mb-3">
+                                    <img class="img-fluid" src="{% static 'dis_img/img-5.jpg' %}" alt="Icon">
+                                </div>
+                                <h6>Learning Disabilities</h6>
+                                <span>(सीखने की अयोग्यता)</span>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="col-lg-3 col-sm-6 wow fadeInUp" data-wow-delay="0.7s">
+                        <a class="cat-item d-block bg-light text-center rounded p-3" href="{% url 'job_list_by_type' job_type='customer' %}">
+                            <div class="rounded p-4">
+                                <div class="icon mb-3">
+                                    <img class="img-fluid" src="{% static 'dis_img/img-4.jpg' %}" alt="Icon">
+                                </div>
+                                <h6>Intellectual Disabilities</h6>
+                                <span>(बौद्धिक विकलांग)</span>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="col-lg-3 col-sm-6 wow fadeInUp" data-wow-delay="0.5s">
+                        <a class="cat-item d-block bg-light text-center rounded p-3" href="{% url 'job_list_by_type' job_type='data_entry' %}">
+                            <div class="rounded p-4">
+                                <div class="icon mb-3">
+                                    <img class="img-fluid" src="{% static 'dis_img/img-7.jpg' %}" alt="Icon">
+                                </div>
+                                <h6>Neurological Disorders</h6>
+                                <span>(तंत्रिका संबंधी विकार)</span>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="col-lg-3 col-sm-6 wow fadeInUp" data-wow-delay="0.7s">
+                        <a class="cat-item d-block bg-light text-center rounded p-3" href="{% url 'job_list_by_type' job_type='call_center' %}">
+                            <div class="rounded p-4">
+                                <div class="icon mb-3">
+                                    <img class="img-fluid" src="{% static 'dis_img/img-8.jpg' %}" alt="Icon">
+                                </div>
+                                <h6>Speech and Language Disorders</h6>
+                                <span>(वाणी और भाषा संबंधी विकार )</span>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
 
         <!-- Category Start -->
         <div class="container-xxl py-5">

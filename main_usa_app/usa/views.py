@@ -6,7 +6,7 @@ from django.forms import inlineformset_factory
 from django import forms
 
 
-from .models import Job, JobSeeker, Contributor, SaveJobs, Courses, Lecture
+from .models import Job, JobSeeker, Contributor, SaveJobs, Courses, Lecture, Blogs, DisabilityType
 
 
 from django.contrib.auth import authenticate, logout
@@ -219,61 +219,36 @@ def profile(request):
 @login_required(login_url='login')
 def edit_jobseeker_profile(request):
     user_profile = JobSeeker.objects.get(user=request.user)
-    
+
     if request.method == 'POST':
-        if request.FILES.get('image') == None:
-            image = user_profile.profileimg
-            username = user_profile.POST['username']
-            bio = user_profile.POST['bio']
-            about = user_profile.POST['about']
-            distype = user_profile.POST['distype']
-            udid = user_profile.POST['udid']
-            dob = user_profile.POST['dob']
-            phone = user_profile.POST['phone']
-            location = user_profile.POST['location']
-            city = user_profile.POST['city']
+        image = request.FILES.get('image', user_profile.profileimg)
+        username = request.POST.get('username', user_profile.username)
+        bio = request.POST.get('bio', user_profile.bio)
+        about = request.POST.get('about', user_profile.about)
+        distype = request.POST.get('distype', user_profile.dis_type)
+        udid = request.POST.get('udid', user_profile.udid)
+        dob = request.POST.get('dob', user_profile.dob)
+        phone = request.POST.get('phone', user_profile.phone_number)
+        location = request.POST.get('location', user_profile.location)
+        city = request.POST.get('city', user_profile.city)
 
-            user_profile.username = username
-            user_profile.bio = bio
-            user_profile.profileimg = image
-            user_profile.about = about
-            user_profile.dis_type = distype
-            user_profile.udid = udid
-            user_profile.dob = dob
-            user_profile.phone_number = phone
-            user_profile.location = location
-            user_profile.city = city
-            user_profile.save()
-
-        if request.FILES.get('image') != None:
-            image = request.FILES.get('image')
-            username = user_profile.POST['username']
-            bio = user_profile.POST['bio']
-            about = user_profile.POST['about']
-            distype = user_profile.POST['distype']
-            udid = user_profile.POST['udid']
-            dob = user_profile.POST['dob']
-            phone = user_profile.POST['phone']
-            location = user_profile.POST['location']
-            city = user_profile.POST['city']
-
-            user_profile.username = username
-            user_profile.bio = bio
-            user_profile.profileimg = image
-            user_profile.about = about
-            user_profile.dis_type = distype
-            user_profile.udid = udid
-            user_profile.dob = dob
-            user_profile.phone_number = phone
-            user_profile.location = location
-            user_profile.city = city
-            user_profile.save()
+        user_profile.username = username
+        user_profile.bio = bio
+        user_profile.profileimg = image
+        user_profile.about = about
+        user_profile.dis_type = distype
+        user_profile.udid = udid
+        user_profile.dob = dob
+        user_profile.phone_number = phone
+        user_profile.location = location
+        user_profile.city = city
+        user_profile.save()
 
         return redirect('edit_jobseeker_profile')
 
     context = {
         'user_profile': user_profile,
-        }
+    }
     template_name = "edit-user-profile.html"
     return render(request, template_name, context)
 
@@ -377,4 +352,37 @@ def create_course_with_lectures(request):
 
 @login_required(login_url='login')
 def post_blog(request):
-    pass
+    if request.method == 'POST':
+        title = request.POST['title']
+        abstract = request.POST.get('abstract', '')
+        distype_id = request.POST.get('distype')
+        content = request.POST.get('content', '')
+        thumbnail = request.FILES.get('image')
+
+        if not title or not content:
+            messages.error(request, 'Title and Content are required fields.')
+            return redirect('post_blog')
+
+        distype = DisabilityType.objects.get(pk=distype_id) if distype_id else None
+
+        blog = Blogs.objects.create(
+            user=request.user,
+            abstraction=abstract,
+            content=content,
+            tumbnail=thumbnail,
+        )
+        print("done nayan")
+        blog.save()
+        if distype:
+            blog.disability_types.add(distype)
+            blog.save()
+
+        
+
+        messages.success(request, 'Blog posted successfully.')
+        return redirect('post_blog')
+
+    disability_types = DisabilityType.objects.all()
+    template_name = "add-blog.html"
+    context = {'disability_types': disability_types}
+    return render(request, template_name, context)

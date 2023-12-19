@@ -20,6 +20,7 @@ urlpatterns = [
     path('about/', views.about, name="about"),
     path('blogs/', views.blogs, name="blogs"),
     path('courses/', views.courses, name="courses"),
+    path('post-blogs/', views.post_blog, name="post_blog"),
 
     # JobSeeker Profile
     path('profile/', views.profile, name="profile"),

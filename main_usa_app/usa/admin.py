@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Job, JobSeeker, Contributor, SaveJobs, DisabilityType, Courses, Lecture
+from .models import Job, JobSeeker, Contributor, SaveJobs, DisabilityType, Courses, Lecture, Blogs
 
 # Register your models here.
 
@@ -10,3 +10,4 @@ admin.site.register(SaveJobs)
 admin.site.register(DisabilityType)
 admin.site.register(Courses)
 admin.site.register(Lecture)
+admin.site.register(Blogs)

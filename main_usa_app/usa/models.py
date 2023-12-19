@@ -96,6 +96,8 @@ class SaveJobs(models.Model):
 class DisabilityType(models.Model):
     name = models.CharField(max_length=255, unique=True)
     description = models.TextField()
+    job_opportunities = models.ManyToManyField(Job, blank=True)
+    
 
     def __str__(self):
         return self.name
@@ -142,6 +144,7 @@ class Lecture(models.Model):
 
 class Blogs(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
+    title = models.CharField(max_length=100)
     id_blog = models.AutoField(primary_key=True)
     abstraction = models.TextField(max_length=250, blank=True)
     disability_types = models.ManyToManyField('DisabilityType', related_name='blogs', blank=True)
