@@ -1,0 +1,29 @@
+{% load static %}
+
+{% include 'header.html' %}
+
+<div class="container-xxl py-5">
+    <div class="container">
+        <div class="text-center mx-auto mb-5 wow fadeInUp" data-wow-delay="0.1s" style="max-width: 600px;">
+            <h2 class="mb-3">{{title}}</h2>
+            <!-- <p>{{title}}</p> -->
+        </div>
+        <div class="row g-4">
+            {% for blog in blogs %}
+                <div class="col-lg-3 col-sm-6 wow fadeInUp" data-wow-delay="0.1s">
+                    <a class="cat-item d-block bg-light text-center rounded p-3" href="{% url 'main_dis_type' name=blog.name %}">
+                        <div class="rounded p-4">
+                            <div class="icon mb-3">
+                                <img class="img-fluid" src="{{blog.disableimg.url}}" alt="Icon">
+                            </div>
+                            <h6>{{blog.name}}</h6>
+                            <!-- <span>({{no_marketing}} open positions)</span> -->
+                        </div>
+                    </a>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+
+{% include 'footer.html' %}

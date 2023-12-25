@@ -28,6 +28,7 @@ urlpatterns = [
 
     # Countributor Profile
     path('contributor/', views.contributor, name="contributor"),
+    path('edit-contributor-profile/', views.edit_contributor_profile, name="edit_contributor_profile"),
 
 
     # All About Jobs
@@ -37,6 +38,9 @@ urlpatterns = [
     path('saved-jorb/<str:job_id>', views.save_job, name="save_job"),
     path('delete-saved-jorb/<str:job_id>', views.delete_save_job, name="delete_save_job"),
 
+    # Blog by catogory
+    path('disable-blog/<str:categories>', views.blog_by_type, name="blog_by_type"),
+    path('main_dis_type/<str:name>', views.main_dis_type, name="main_dis_type"),
 
     # Create Course with Lectures
     path('create-course-with-lectures/', views.create_course_with_lectures, name="create_course_with_lectures"),

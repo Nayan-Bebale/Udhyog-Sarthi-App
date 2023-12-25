@@ -18,6 +18,10 @@ from django.contrib.admin.views.decorators import staff_member_required
 
 
 
+
+letters = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z']
+numbers = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9']
+symbols = ['_', '@']
 # Create your views here.
 
 # Landing Page
@@ -65,11 +69,24 @@ def signup(request):
         email = request.POST['email']
         user_type = request.POST['type']
         password = request.POST['password']
+        password2 = request.POST['password2']
+
         
+        # Check if the username contains '@' or '_'
+        if not any(char in symbols for char in username):
+            messages.error(request, "Username must contain '@' or '_'")
+            return redirect('login')
+
         # Check if the user already exists
-        if User.objects.filter(username=username).exists():
-            messages.error(request, 'User with this UDID already exists.')
+        elif User.objects.filter(username=username).exists():
+            messages.error(request, 'A user with this username already exists.')
             return redirect('login')  # Replace 'signup' with the name of your sign-up URL
+
+        # Check if passwords match
+        elif password != password2:
+            messages.error(request, "Passwords do not match. Please recheck.")
+            return redirect('login')
+
 
         # Create a new user
         user = User.objects.create_user(username=username, email=email, password=password)
@@ -85,6 +102,10 @@ def signup(request):
             # Create a contributor profile or perform other actions as needed
             Contributor.objects.create(user=user)
             return redirect('contributor')
+        elif user_type == 'parent':
+            # Create a contributor profile or perform other actions as needed
+            
+            return redirect('index')
 
         messages.success(request, 'Account created successfully. You can now sign in.')
         return redirect('login')  # Replace 'signin' with the name of your sign-in URL
@@ -97,6 +118,8 @@ def signin(request):
         name = request.POST['name']
         password = request.POST['password']
         user = authenticate(request, username=name, password=password)
+
+        
 
         if user is not None:
             auth_login(request, user)  # Use the imported login function from django.contrib.auth
@@ -187,12 +210,17 @@ def blogs(request):
 
 
 def courses(request):
+    course = Courses.objects.all()
+
+    context = {
+        'course':course,
+    }
     template_name = "courses.html"
-    return render(request, template_name)
+    return render(request, template_name, context)
 
 # Staff memmber 
 
-@staff_member_required
+@login_required
 def post_job(request):
     if request.method == 'POST':
         form = JobForm(request.POST, request.FILES)
@@ -211,8 +239,13 @@ def post_job(request):
 # Jobseeker Profile
 @login_required(login_url='login')
 def profile(request):
+    jobs = Job.objects.all()
+    
+    context = {
+        'jobs':jobs,
+    }
     template_name = "profile.html"
-    return render(request, template_name)
+    return render(request, template_name, context)
 
 
 
@@ -255,8 +288,12 @@ def edit_jobseeker_profile(request):
 
 @login_required(login_url='login')
 def contributor(request):
+    job = Job.objects.all()
+    context = {
+        "jobs":job,
+        }
     template_name = "contributor.html"
-    return render(request, template_name)
+    return render(request, template_name, context)
 
 
 @login_required(login_url='login')
@@ -385,4 +422,62 @@ def post_blog(request):
     disability_types = DisabilityType.objects.all()
     template_name = "add-blog.html"
     context = {'disability_types': disability_types}
+    return render(request, template_name, context)
+
+
+
+def blog_by_type(request, categories):
+    blogs = DisabilityType.objects.filter(categories=categories)
+
+    if categories == 'a':
+        title = 'Categories:A Blindness and low vision'
+    elif categories == 'b':
+        title = 'Categories:B Deaf and Hard of Hearing'
+    elif categories == 'c':
+        title = 'Categories:C Locomotor disabilities'
+    elif categories == 'd':
+        title = 'Categories:D Autism, intellectual disability, specific learning disability, and mental illness'
+    elif categories == 'e':
+        title = 'Categories:E Multiple disabilities'
+
+    template_name = "specific_type.html"
+    context = {
+        'blogs':blogs,
+        'title': title,
+    }
+    return render(request, template_name, context)
+
+
+def main_dis_type(request, name):
+    blogs = DisabilityType.objects.filter(name=name)
+
+    template_name = "disable-blogs.html"
+    context = {
+        'blogs':blogs,
+    }
+    return render(request, template_name, context)
+
+
+
+@login_required(login_url='login')
+def edit_contributor_profile(request):
+    user_profile = Contributor.objects.get(user=request.user)
+
+    if request.method == 'POST':
+        image = request.FILES.get('image', user_profile.profileimg)
+        username = request.POST.get('username', user_profile.user)
+        bio = request.POST.get('bio', user_profile.bio)
+        
+
+        user_profile.user = username
+        user_profile.bio = bio
+        user_profile.profileimg = image
+        user_profile.save()
+
+        return redirect('edit_contributor_profile')
+
+    context = {
+        'user_profile': user_profile,
+    }
+    template_name = "edit-contributor-profile.html"
     return render(request, template_name, context)

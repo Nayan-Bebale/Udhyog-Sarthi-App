@@ -95,8 +95,20 @@ class SaveJobs(models.Model):
     
 class DisabilityType(models.Model):
     name = models.CharField(max_length=255, unique=True)
-    description = models.TextField()
+    description = RichTextField()
     job_opportunities = models.ManyToManyField(Job, blank=True)
+
+    categories_choices = [
+        ('a', 'Categories A'),
+        ('b', 'Categories B'),
+        ('c', 'Categories C'),
+        ('d', 'Categories D'),
+        ('e', 'Categories E'),
+        
+    ]
+    categories = models.CharField(max_length=10, choices=categories_choices)
+
+    disableimg = models.ImageField(upload_to='disable_images/', default='default_course.jpg')
     
 
     def __str__(self):
@@ -153,3 +165,4 @@ class Blogs(models.Model):
     tumbnail = models.ImageField(upload_to='blogs_images/', default='default_blogs.jpg')
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+
