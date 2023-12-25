@@ -3,6 +3,7 @@ from django.utils import timezone
 from django.contrib.auth.models import User
 
 from ckeditor.fields import RichTextField
+from os import getcwd
 
 # Create your models here.
 
@@ -43,8 +44,9 @@ class Job(models.Model):
     hours = models.PositiveIntegerField()
     about = models.TextField()
     day_ago = models.PositiveIntegerField()
-    image = models.ImageField(upload_to='job_images/', default='D:\main_usa_app\main_usa_app\main_usa_app\media\default_job_banner.jpg')
+    image = models.ImageField(upload_to='job_images/', default=f'{getcwd()}\\main_usa_app\\main_usa_app\\main_usa_app\\media\\default_job_banner.jpg')
     posted_by = models.ForeignKey('auth.User', on_delete=models.CASCADE)
+    print(f"current directory {getcwd()}")
 
 
 
