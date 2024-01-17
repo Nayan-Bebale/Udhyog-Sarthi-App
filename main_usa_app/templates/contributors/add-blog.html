@@ -1,24 +1,12 @@
-<!-- add-blog.html -->
-{% extends 'base.html' %}
-
 {% load static %}
-
-{% block extrahead %}
-    <script>window.CKEDITOR_BASEPATH = '{% static "ckeditor/ckeditor/" %}';</script>
-    {{ block.super }}
-{% endblock %}
-
+{% include 'contributors/contributor_sidebar.html' %}
 {% block content %}
-  {% include 'contributor_sidebar.html' %}
   
-  <section class="p-4 sm:ml-64">
-    <div class="container px-5 py-24 mx-auto flex">    
-      <form method="post" action="" enctype="multipart/form-data">
-        <div>
-            {% for message in messages %}
-                <h5>{{message}}</h5>
-            {% endfor %}
-        </div>
+  
+  <section class="p-4 sm:ml-64" style="height: 100%;">
+    <h1 class="sm:text-3xl text-2xl font-medium title-font mb-4 text-gray-900">Post Blogs</h1>
+    <div class="container px-5 py-24 mx-auto flex">
+      <form method="post" action="{% url 'post_blog' %}" enctype="multipart/form-data">
         {% csrf_token %}
         <div>
           <label class="text-xl mb-7 place-content-center" for="image">Upload A Thumbnail:</label><br>
@@ -37,11 +25,18 @@
               <option value="{{ dtype.id }}">{{ dtype.name }}</option>
             {% endfor %}
           </select>
+          <br>
+          <label class="text-xl" for="categories">Categories:</label><br>
+          <select class="mb-7 rounded-md p-2 border-2 border-black-300" name="categories" id="categories" required>
+              <option value="" selected>Choose</option>
+              {% for category in categories_choices %}
+                  <option value="{{ category.0 }}">{{ category.1 }}</option>
+              {% endfor %}
+          </select>
+          <h1 class="text-xl">Content:</h1>
+          <textarea name="content" id="editor" class="mt-1 p-2 border rounded-md w-full"></textarea>
         </div>
-    
-        <h1 class="text-xl">Content:</h1>
-        <div id="editor" style="width: 100%; height: 100%;"></div>
-
+        <br>
         <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Post Blog</button>
       </form>
     </div>
@@ -50,6 +45,7 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.2.0/flowbite.min.js"></script>
 
   <script>
+    console.log("CKEditor initialization script executed");
     ClassicEditor
       .create(document.querySelector('#editor'))
       .catch(error => {

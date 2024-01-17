@@ -1,9 +1,21 @@
+/* Color Pallete Start */
+
+
 :root {
-    --primary: #007056;
-    --secondary: #FF6922;
-    --light: #EFFDF5;
-    --dark: #0E2E50;
+    --primary: #3498db;
+    --secondary: #e74c3c;
+    --light: #ecf0f1;
+    --dark: #2c3e50;
 }
+
+body {
+    background-color: var(--light);
+    color: var(--dark);
+}
+
+.button {
+    background-color: var(--primary);
+  }
 
 .back-to-top {
     position: fixed;
@@ -13,6 +25,30 @@
     z-index: 99;
 }
 
+
+h6{
+    color: var(--secondary);
+}
+
+h1{
+    color: var(--dark);
+}
+
+a{
+    color: var(--secondary);
+}
+
+.container-xxl{
+    background-color: var(--light);
+}
+
+.col-lg-4{
+    background-color: var(--primary);
+    color: var(--secondary);
+}
+.text-primary{
+    color: var(--dark);
+}
 
 /*** Spinner ***/
 #spinner {
@@ -37,6 +73,11 @@
 .btn.btn-primary,
 .btn.btn-secondary {
     color: #FFFFFF;
+}
+
+.btn.btn-primary,
+.btn.btn-secondary{
+    background-color: var(--dark);
 }
 
 .btn-square {

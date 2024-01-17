@@ -1,3 +1,32 @@
+document.getElementById('theme-selector').addEventListener('change', function() {
+    const selectedTheme = this.value;
+  
+    switch (selectedTheme) {
+      case 'theme1':
+        setThemeVariables('#ffffff', '#333333', '#ff5733');
+        break;
+      case 'theme2':
+        setThemeVariables('#e6e6e6', '#444444', '#3498db');
+        break;
+        case 'theme3':
+        setThemeVariables('#294B29', '#50623A', '#789461');
+      // Add more cases for additional themes
+  
+      // Add a case for your new theme
+      case 'custom':
+        setThemeVariables('#030637', '#3C0753', '#720455', '#910A67');
+        break;
+    }
+  });
+
+  function setThemeVariables(primaryColor, secondaryColor, lightColor, darkColor) {
+    document.documentElement.style.setProperty('--primary', primaryColor);
+    document.documentElement.style.setProperty('--secondary', secondaryColor);
+    document.documentElement.style.setProperty('--light', lightColor);
+    document.documentElement.style.setProperty('--dark', darkColor);
+  }
+
+
 (function ($) {
     "use strict";
 

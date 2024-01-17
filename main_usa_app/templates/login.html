@@ -8,7 +8,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
     <link rel="stylesheet" href="{% static 'login/style.css' %}">
-    <title>Landing_page</title>
+    <title>UdyogSarthi</title>
+    <link rel="icon" type="image/x-icon" href="{% static 'img/icon-deal-1.png' %}">
     <style>
         h5{
             color: red;
@@ -30,7 +31,6 @@
                 <img src="{% static '\img\icon-deal.png' %}" height="70" width="300"><br>
                 <h1>Create Account</h1><br>
 
-                <span>or use your UDID for registration</span>
                 <input type="text" name="username" placeholder="Name">
                 <input type="email" name="email" placeholder="Email">
                 <select name="type" id="dog-names"
@@ -55,10 +55,9 @@
                 <img src="{% static '\img\icon-deal.png' %}" height="70" width="300"><br>
                 <h1>Sign In</h1><br>
 
-                <span>or use your UDID password</span>
                 <input type="text" name="name" placeholder="Name">
                 <input type="password" name="password" placeholder="Password">
-                <a href="#">Forget Your Password?</a>
+                <a href="{% url 'reset_password' %}">Forget Your Password?</a>
                 <button type="submit">Sign In</button>
             </form>
         </div>

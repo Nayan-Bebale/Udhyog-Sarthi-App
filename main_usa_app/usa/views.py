@@ -15,8 +15,7 @@ from django.contrib import messages
 from django.contrib.auth import login as auth_login
 from django.contrib.auth.decorators import login_required
 from django.contrib.admin.views.decorators import staff_member_required
-
-
+from django.urls import reverse
 
 
 letters = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z']
@@ -24,7 +23,7 @@ numbers = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9']
 symbols = ['_', '@']
 # Create your views here.
 
-# Landing Page
+#################################### Landing Page System ####################################
 
 def index(request):
 
@@ -58,6 +57,9 @@ def contect(request):
 def about(request):
     template_name = "about.html"
     return render(request, template_name)
+
+
+# Login and Signup System starts ###############################
 
 def login(request):
     template_name = "login.html"
@@ -103,7 +105,7 @@ def signup(request):
             Contributor.objects.create(user=user)
             return redirect('contributor')
         elif user_type == 'parent':
-            # Create a contributor profile or perform other actions as needed
+            # Create a parent profile or perform other actions as needed
             
             return redirect('index')
 
@@ -126,9 +128,9 @@ def signin(request):
             messages.success(request, 'Login successful.')
 
             if JobSeeker.objects.filter(user=user).exists():
-                return redirect('profile')
+                return redirect('profile', user_id=user.id)
             elif Contributor.objects.filter(user=user).exists():
-                return redirect('contributor')
+                return redirect('contributor', user_id=user.id)
                 # Replace 'profile' with the name of your profile view
         else:
             messages.error(request, 'Invalid Name or password.')
@@ -203,10 +205,55 @@ def job_list_by_type(request, job_type):
     }
     return render(request, template_name, context)
 
+def main_dis_type(request, name):
+    blogs = DisabilityType.objects.filter(name=name)
 
+    template_name = "disable-blogs.html"
+    context = {
+        'blogs':blogs,
+    }
+    return render(request, template_name, context)
+
+
+################################# LANDING PAGE BLOGs
 def blogs(request):
-    template_name = "blogs.html"
-    return render(request, template_name)
+    context = {
+        "blogs":Blogs.objects.all(),
+    }
+    template_name = "blogsSystem/blogs.html"
+    return render(request, template_name, context)
+
+def blog_post_detail_page(request, blogid):
+    obj = get_object_or_404(Blogs, id_blog=blogid)
+    template_name = "blog_post_details.html"
+    context = {"object":obj}
+    return render(request, template_name, context)
+
+
+
+def blog_by_type(request, categories):
+    blogs = DisabilityType.objects.filter(categories=categories)
+
+    if categories == 'a':
+        title = 'Categories:A Blindness and low vision'
+    elif categories == 'b':
+        title = 'Categories:B Deaf and Hard of Hearing'
+    elif categories == 'c':
+        title = 'Categories:C Locomotor disabilities'
+    elif categories == 'd':
+        title = 'Categories:D Autism, intellectual disability, specific learning disability, and mental illness'
+    elif categories == 'e':
+        title = 'Categories:E Multiple disabilities'
+
+    template_name = "specific_type.html"
+    context = {
+        'blogs':blogs,
+        'title': title,
+    }
+    return render(request, template_name, context)
+
+
+
 
 
 def courses(request):
@@ -218,27 +265,10 @@ def courses(request):
     template_name = "courses.html"
     return render(request, template_name, context)
 
-# Staff memmber 
 
-@login_required
-def post_job(request):
-    if request.method == 'POST':
-        form = JobForm(request.POST, request.FILES)
-        if form.is_valid():
-            # Set the posted_by field to the current staff member
-            job = form.save(commit=False)
-            job.posted_by = request.user
-            job.save()
-            return redirect('post_job')  # Redirect to the job list page
-    else:
-        form = JobForm()
-
-    return render(request, 'post_job.html', {'form': form})
-
-
-# Jobseeker Profile
+####################################### Jobseeker Profile ###################
 @login_required(login_url='login')
-def profile(request):
+def profile(request, user_id):
     jobs = Job.objects.all()
     
     context = {
@@ -286,14 +316,6 @@ def edit_jobseeker_profile(request):
     return render(request, template_name, context)
 
 
-@login_required(login_url='login')
-def contributor(request):
-    job = Job.objects.all()
-    context = {
-        "jobs":job,
-        }
-    template_name = "contributor.html"
-    return render(request, template_name, context)
 
 
 @login_required(login_url='login')
@@ -322,50 +344,6 @@ def jobseeker_jobs(request):
     template_name = "jobseeker_jobs.html"
     return render(request, template_name, context)
 
-
-@login_required(login_url='login')
-def save_job(request, job_id):
-    job = Job.objects.get(pk=job_id)
-    user = request.user
-
-    # Check if the job is already saved by the user
-    if not SaveJobs.objects.filter(user=user, job=job).exists():
-        SaveJobs.objects.create(user=user, job=job)
-
-    return redirect('jobseeker_jobs')
-
-
-
-@login_required(login_url='login')
-def list_save_job(request):
-    save_jobs = SaveJobs.objects.filter(user=request.user).select_related('job')
-    
-    # Extract the job instances from the queryset
-    saved_jobs = [save_job.job for save_job in save_jobs]
-
-    context = {
-        'saved': saved_jobs,
-    }
-    template_name = "saved_jobs.html"
-    return render(request, template_name, context)
-
-
-@login_required(login_url='login')
-def delete_save_job(request, job_id):
-    job = get_object_or_404(Job, pk=job_id)
-    user = request.user
-
-    # Check if the job is already saved by the user
-    save_job = SaveJobs.objects.filter(user=user, job=job).first()
-
-    # Check if the save_job exists before attempting to delete
-    if save_job:
-        save_job.delete()
-
-    return redirect('list_save_job')
-
-
-
 @login_required(login_url='login')
 def create_course_with_lectures(request):
     CourseFormSet = inlineformset_factory(Courses, Lecture, form=LectureForm, extra=1, can_delete=False)
@@ -387,67 +365,6 @@ def create_course_with_lectures(request):
     return render(request, 'courses_form.html', {'course_form': course_form, 'formset': formset})
 
 
-@login_required(login_url='login')
-def post_blog(request):
-    if request.method == 'POST':
-        title = request.POST['title']
-        abstract = request.POST.get('abstract', '')
-        distype_id = request.POST.get('distype')
-        content = request.POST.get('content', '')
-        thumbnail = request.FILES.get('image')
-
-        if not title or not content:
-            messages.error(request, 'Title and Content are required fields.')
-            return redirect('post_blog')
-
-        distype = DisabilityType.objects.get(pk=distype_id) if distype_id else None
-
-        blog = Blogs.objects.create(
-            user=request.user,
-            abstraction=abstract,
-            content=content,
-            tumbnail=thumbnail,
-        )
-        print("done nayan")
-        blog.save()
-        if distype:
-            blog.disability_types.add(distype)
-            blog.save()
-
-        
-
-        messages.success(request, 'Blog posted successfully.')
-        return redirect('post_blog')
-
-    disability_types = DisabilityType.objects.all()
-    template_name = "add-blog.html"
-    context = {'disability_types': disability_types}
-    return render(request, template_name, context)
-
-
-
-def blog_by_type(request, categories):
-    blogs = DisabilityType.objects.filter(categories=categories)
-
-    if categories == 'a':
-        title = 'Categories:A Blindness and low vision'
-    elif categories == 'b':
-        title = 'Categories:B Deaf and Hard of Hearing'
-    elif categories == 'c':
-        title = 'Categories:C Locomotor disabilities'
-    elif categories == 'd':
-        title = 'Categories:D Autism, intellectual disability, specific learning disability, and mental illness'
-    elif categories == 'e':
-        title = 'Categories:E Multiple disabilities'
-
-    template_name = "specific_type.html"
-    context = {
-        'blogs':blogs,
-        'title': title,
-    }
-    return render(request, template_name, context)
-
-
 def main_dis_type(request, name):
     blogs = DisabilityType.objects.filter(name=name)
 
@@ -457,7 +374,16 @@ def main_dis_type(request, name):
     }
     return render(request, template_name, context)
 
+####################################### Contributor SiteSystem ###############################
 
+@login_required(login_url='login')
+def contributor(request):
+    job = Job.objects.all()
+    context = {
+        "jobs":job,
+        }
+    template_name = "contributors/contributor.html"
+    return render(request, template_name, context)
 
 @login_required(login_url='login')
 def edit_contributor_profile(request):
@@ -474,10 +400,121 @@ def edit_contributor_profile(request):
         user_profile.profileimg = image
         user_profile.save()
 
-        return redirect('edit_contributor_profile')
+        return redirect('contributors/edit_contributor_profile')
 
     context = {
         'user_profile': user_profile,
     }
     template_name = "edit-contributor-profile.html"
     return render(request, template_name, context)
+
+@login_required(login_url='login')
+def blog_post_list_view(request):
+    obj = Blogs.objects.filter(user=request.user)
+    context = {"object": obj}
+    template_name = "contributors/blog_post_list.html"
+    return render(request, template_name, context)
+
+@login_required(login_url='login')
+def post_blog(request):
+    if request.method == 'POST':
+        title = request.POST['title']
+        abstract = request.POST.get('abstract', '')
+        distype_id = request.POST.get('distype')
+        categories = request.POST.get('categories')
+        content = request.POST.getlist('content')[0] if request.POST.getlist('content') else ''
+        thumbnail = request.FILES.get('image')
+
+        if not title or not content:
+            messages.error(request, 'Title and Content are required fields.')
+            return redirect('post_blog')
+
+        distype = DisabilityType.objects.get(pk=distype_id) if distype_id else None
+
+        blog = Blogs.objects.create(
+            user=request.user,
+            abstraction=abstract,
+            categories=categories,
+            content=content,
+            tumbnail=thumbnail,
+        )
+        blog.save()
+        if distype:
+            blog.disability_types.add(distype)
+            blog.save()
+
+        
+
+        messages.success(request, 'Blog posted successfully.')
+        return redirect('post_blog')
+
+    disability_types = DisabilityType.objects.all()
+    template_name = "contributors/add-blog.html"
+    context = {'disability_types': disability_types, 'categories_choices': Blogs.categories_choices}
+    return render(request, template_name, context)
+
+def blog_post_update_view(request, blogid):
+    obj = get_object_or_404(Blogs, id_blog=blogid)
+    template_name = "blog_post_update.html"
+    context = {"object":obj, "form":None}
+    return render(request, template_name, context)
+
+def blog_post_delete_view(request, blogid):
+    obj = get_object_or_404(Blogs, id_blog=blogid)
+    template_name = "blog_post_delete.html"
+    context = {"object":obj}
+    return render(request, template_name, context)
+
+@login_required
+def post_job(request):
+    if request.method == 'POST':
+        form = JobForm(request.POST, request.FILES)
+        if form.is_valid():
+            # Set the posted_by field to the current staff member
+            job = form.save(commit=False)
+            job.posted_by = request.user
+            job.save()
+            return redirect('post_job')  # Redirect to the job list page
+    else:
+        form = JobForm()
+
+    return render(request, 'post_job.html', {'form': form})
+
+
+@login_required(login_url='login')
+def save_job(request, job_id):
+    job = Job.objects.get(pk=job_id)
+    user = request.user
+
+    # Check if the job is already saved by the user
+    if not SaveJobs.objects.filter(user=user, job=job).exists():
+        SaveJobs.objects.create(user=user, job=job)
+
+    return redirect('jobseeker_jobs')
+
+@login_required(login_url='login')
+def list_save_job(request):
+    save_jobs = SaveJobs.objects.filter(user=request.user).select_related('job')
+    
+    # Extract the job instances from the queryset
+    saved_jobs = [save_job.job for save_job in save_jobs]
+
+    context = {
+        'saved': saved_jobs,
+    }
+    template_name = "saved_jobs.html"
+    return render(request, template_name, context)
+
+@login_required(login_url='login')
+def delete_save_job(request, job_id):
+    job = get_object_or_404(Job, pk=job_id)
+    user = request.user
+
+    # Check if the job is already saved by the user
+    save_job = SaveJobs.objects.filter(user=user, job=job).first()
+
+    # Check if the save_job exists before attempting to delete
+    if save_job:
+        save_job.delete()
+
+    return redirect('list_save_job')

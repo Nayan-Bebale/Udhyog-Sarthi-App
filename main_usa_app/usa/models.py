@@ -106,6 +106,7 @@ class DisabilityType(models.Model):
         ('c', 'Categories C'),
         ('d', 'Categories D'),
         ('e', 'Categories E'),
+        ('o', 'Other'),
         
     ]
     categories = models.CharField(max_length=10, choices=categories_choices)
@@ -157,11 +158,23 @@ class Lecture(models.Model):
 
 
 class Blogs(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
     title = models.CharField(max_length=100)
     id_blog = models.AutoField(primary_key=True)
     abstraction = models.TextField(max_length=250, blank=True)
     disability_types = models.ManyToManyField('DisabilityType', related_name='blogs', blank=True)
+    categories_choices = [
+        ('inspiration', 'Inspiration'),
+        ('interviews', 'Interviews'),
+        ('stories', 'Stories'),
+        ('prepration', 'Prepration'),
+        ('resources', 'Resources'),
+        ('experience', 'Experience'),
+        ('awareness', 'Awareness'),
+        ('research', 'Research'),
+        ('other', 'Other'),  
+    ]
+    categories = models.CharField(max_length=15, choices=categories_choices)
 
     content = RichTextField()
     tumbnail = models.ImageField(upload_to='blogs_images/', default='default_blogs.jpg')

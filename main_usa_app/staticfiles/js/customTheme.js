@@ -1,84 +1,79 @@
 console.log(`initializing`);
 
+let fontSize = Number(localStorage.getItem("fontSize")) || 12; // default font size
 
-let fontSize =  Number(localStorage.getItem("fontSize")) ?? 12; // default font size
 const themes = {
-	white: "white",
-	dark: "dark",
-	yellow: "yellow",
-	blue: "blue",
-};
-
-const backgroundColors = {
-	[themes.white]: "bg-white",
-	[themes.dark]: "bg-dark",
-	[themes.yellow]: "bg-warning",
-	[themes.blue]: "bg-primary",
-};
-const textColors = {
-	[themes.white]: "text-black",
-	[themes.dark]: "text-white",
-	[themes.yellow]: "text-black",
-	[themes.blue]: "text-black",
-};
-const navThemes = {
-	[themes.white]: "custom-bg-blue-900",
-	[themes.yellow]: "bg-dark",
-	[themes.blue]: "custom-bg-orange",
-	[themes.dark]: "custom-bg-yellow-300",
+    white: "white",
+    dark: "dark",
+    yellow: "yellow",
+    blue: "blue",
 };
 
 const initializeTheme = (theme = "") => {
-	$("#btn-theme-change-label").text().toLowerCase() === themes.dark ? $("#btn-theme-change-label").text("White") : $("#btn-theme-change-label").text("Dark");
-	let themeColor = "text-black";
-	let textColor = "text-white";
-	console.log(`Initializing theme.......`);
+    let themeColor = "text-black";
+    let textColor = "text-white";
+    let navBgColor = "text-black";
 
-	// remove existing classes first
-	$("body").removeClass()
-	$("h1").removeClass()
-	$("#main-section").removeClass();
+    // remove existing classes first
+    $("body").removeClass();
+    $("#main-section").removeClass();
+    $("#theme-navbar").removeClass();
 
-	if (!theme && !localStorage.getItem("theme")) theme = "white";
-	else if (localStorage.getItem("theme") && !theme) theme = localStorage.getItem("theme");
+    if (!theme && !localStorage.getItem("theme")) theme = "white";
+    else if (localStorage.getItem("theme") && !theme) theme = localStorage.getItem("theme");
 
-	localStorage.setItem("theme", theme);
-	themeColor = backgroundColors[theme];
-	textColor = textColors[theme];
-	$("body").addClass(themeColor);
-	$("body").addClass(textColor);
-	$("h1").addClass(`display-5 animated fadeIn mb-4 ${textColor}`);
-	$("#main-section").addClass(themeColor);
-	$("#main-section").addClass(textColor);
-	$("body").css("font-size", `${fontSize}px`);
-	console.log(`theme: ${theme} settings themeColor to ${themeColor}`);
-	console.log(`theme: ${theme} settings textColor to ${textColor}`);
+    localStorage.setItem("theme", theme);
+    themeColor = getBackgroundColor(theme);
+    textColor = getTextColors(theme);
+    navBgColor = getNavTheme(theme);
+
+    $("body").addClass(themeColor);
+    $("#main-section").addClass(themeColor);
+    $("#main-section").addClass(textColor);
+    $("#theme-navbar").addClass(navBgColor);
+
+    $(`#${theme}-theme-checkbox`).prop("checked", true);
+    $("body").css("font-size", `${fontSize}px`);
 };
 
-// initialize font size
+const getBackgroundColor = (theme) => {
+    return `bg-${theme === themes.dark ? "black" : theme}`;
+};
+
+const getTextColors = (theme) => {
+    return theme === themes.white ? "text-black" : "text-white";
+};
+
+const getNavTheme = (theme) => {
+    return `bg-${theme === themes.dark ? "blue" : theme}-900`;
+};
+
+const toggleTheme = (theme) => {
+    initializeTheme(theme);
+};
+
 const increaseFont = () => {
-	console.log(`Initializing fonts.......`);
-
-	if (localStorage.getItem("fontSize")) fontSize = Number(localStorage.getItem("fontSize"));
-	fontSize += 2;
-	localStorage.setItem("fontSize", fontSize);
-	$("body").css("font-size", `${fontSize}px`);
-	console.log(`settings font size to ${fontSize}px`);
+    console.log(`Initializing fonts.......`);
+    fontSize += 2;
+    localStorage.setItem("fontSize", fontSize);
+    $("body").css("font-size", `${fontSize}px`);
+    console.log(`settings font size to ${fontSize}px`);
 };
+
 const decreaseFont = () => {
-	console.log(`Initializing fonts.......`);
-	if (localStorage.getItem("fontSize")) fontSize = Number(localStorage.getItem("fontSize"));
-	fontSize -= 2;
-	localStorage.setItem("fontSize", fontSize);
-	$("body").css("font-size", `${fontSize}px`);
-	console.log(`settings font size to ${fontSize}px`);
+    console.log(`Initializing fonts.......`);
+    fontSize -= 2;
+    localStorage.setItem("fontSize", fontSize);
+    $("body").css("font-size", `${fontSize}px`);
+    console.log(`settings font size to ${fontSize}px`);
 };
 
-$("#btn-theme-change").on("click", () => initializeTheme($("#btn-theme-change-label").text().toLowerCase()))
+$("input.btn-check").on("change", function () {
+    const theme = $(this).attr("id").replace("-checkbox", "");
+    toggleTheme(theme);
+});
 
 $("#increase-font-size").on("click", increaseFont);
 $("#decrease-font-size").on("click", decreaseFont);
-
-
 
 initializeTheme();
