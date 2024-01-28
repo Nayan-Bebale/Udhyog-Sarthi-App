@@ -21,7 +21,7 @@
 
     <div class="container" id="container">
         <div class="form-container sign-up">
-            <form method="post" action="{% url 'signup' %}">
+            <form method="post" action="{% url 'usa:signup' %}">
                 <div>
                     {% for message in messages %}
                         <h5>{{message}}</h5>
@@ -45,7 +45,7 @@
             </form>
         </div>
         <div class="form-container sign-in">
-            <form method="post" action="{% url 'signin' %}">
+            <form method="post" action="{% url 'usa:signin' %}">
                 <div>
                     {% for message in messages %}
                         <h5>{{message}}</h5>

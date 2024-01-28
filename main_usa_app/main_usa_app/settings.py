@@ -46,6 +46,8 @@ INSTALLED_APPS = [
     "ckeditor",
     "ckeditor_uploader",
     "usa",
+    "contributor",
+    "jobseeker",
     'crispy_forms',
 ]
 

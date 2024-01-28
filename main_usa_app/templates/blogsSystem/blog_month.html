@@ -1,0 +1,29 @@
+{% include 'header.html' %}
+
+<main class="container">
+    <div class="p-4 p-md-5 mb-4 rounded text-body-emphasis bg-body-secondary">
+        <div class="col-lg-6 px-0">
+          <h2 class="display-5 fst-italic">Archive for {{ month_name }}</h2>
+        </div>
+    </div>
+    
+    <div class="row mb-2">
+        {% for blog in blogs %}
+            <div class="col-md-10">
+                <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
+                    <div class="col p-4 d-flex flex-column position-static">
+                    <strong class="d-inline-block mb-2 text-primary-emphasis">{{blog.categories.title}}</strong>
+                    <h3 class="mb-0">{{blog.title}}</h3>
+                    <div class="mb-1 text-body-secondary">{{blog.created_at}}</div>
+                    <p class="card-text mb-auto">{{blog.abstraction|truncatechars:50}}</p>
+                    <p class="lead mb-0"><a href="{% url 'usa:blog_post_detail_page' blogid=blog.id_blog %}">Continue reading...</a></p>
+                    </div>
+                    <div class="col-auto d-none d-lg-block">
+                        <img src="{{blog.tumbnail.url}}" alt="Blog Thumbnail" width="100%" height="250" style="min-width: 450;">
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+</main>
+{% include 'footer.html' %}

@@ -1,16 +1,14 @@
 from django.urls import path
 from . import views
 
-urlpatterns = [
-    path('', views.index, name="index"),
-    path('post-job/', views.post_job, name="post_job"),
+app_name = 'usa'
 
+urlpatterns = [
     # login Registration system 
     path('login/', views.login, name="login"),
     path('signup/', views.signup, name='signup'),
     path('signin/', views.signin, name='signin'),
     path('signout/', views.signout, name='signout'),
-
 
     path('property-list/', views.property_list, name="property_list"),
     path('property-agent/', views.property_agent, name="property_agent"),
@@ -24,25 +22,8 @@ urlpatterns = [
 
     #blog And Post Url
     path('blogs/', views.blogs, name="blogs"),
-    path('post-blogs/', views.post_blog, name="post_blog"),
-    path('blog-detai/<int:blogid>/', views.blog_post_detail_page, name="blog_post_detail_page"),
-
-    # JobSeeker Profile
-    path('profile/', views.profile, name="profile"),
-    path('edit-jobseeker-profile/', views.edit_jobseeker_profile, name="edit_jobseeker_profile"),
-
-    # Countributor Profile
-    path('contributor/', views.contributor, name="contributor"),
-    path('edit-contributor-profile/', views.edit_contributor_profile, name="edit_contributor_profile"),
-    path('blog_post_list_view/', views.blog_post_list_view, name="blog_post_list_view"),
-
-
-    # All About Jobs
-    path('jobseeker-jobs/', views.jobseeker_jobs, name="jobseeker_jobs"),
-
-    path('list-saved-jobs/', views.list_save_job, name="list_save_job"),
-    path('saved-jorb/<str:job_id>', views.save_job, name="save_job"),
-    path('delete-saved-jorb/<str:job_id>', views.delete_save_job, name="delete_save_job"),
+    path('blogs/<int:year>/<int:month>/', views.blog_month, name='blog_month'),
+    path('blog-detail/<int:blogid>/', views.blog_post_detail_page, name="blog_post_detail_page"),
 
     # Blog by catogory
     path('disable-blog/<str:categories>', views.blog_by_type, name="blog_by_type"),

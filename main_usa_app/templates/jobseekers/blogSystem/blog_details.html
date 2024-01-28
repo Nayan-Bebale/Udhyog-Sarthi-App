@@ -1,0 +1,19 @@
+{% load static %}
+
+{% include 'jobseekers/jobseeker_sidebar.html' %}
+
+<div class="main-content">
+    <section class="text-gray-600 body-font" style="margin-top: 5px;">
+        <div class="container px-5 py-24 mx-auto flex flex-col border-2 border-dotted border-black">
+            <div class="lg:w-4/6 mx-auto">
+                <h1 class="text-6xl mb-4">{{ object.title }}</h1>
+                <div class="rounded-lg h-64 overflow-hidden mb-4">
+                    <img alt="content" class="object-cover object-center h-full w-full" width="100%" height="500px" src="{{ object.tumbnail.url }}">
+                </div>
+            </div>
+            <p class="lg:w-4/6 mx-auto">{{ object.content|safe|linebreaks }}</p>
+        </div>
+    </section>
+
+
+{% include 'jobseekers/jobseeker_footer.html' %}

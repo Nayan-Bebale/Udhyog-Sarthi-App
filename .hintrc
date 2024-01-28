@@ -13,20 +13,34 @@
     "axe/parsing": [
       "default",
       {
-        "duplicate-id-active": "off"
+        "duplicate-id-active": "off",
+        "duplicate-id-aria": "off"
       }
     ],
     "no-inline-styles": "off",
     "axe/text-alternatives": [
       "default",
       {
-        "image-alt": "off"
+        "image-alt": "off",
+        "frame-title": "off"
       }
     ],
     "axe/name-role-value": [
       "default",
       {
         "link-name": "off"
+      }
+    ],
+    "axe/structure": [
+      "default",
+      {
+        "list": "off"
+      }
+    ],
+    "axe/aria": [
+      "default",
+      {
+        "aria-progressbar-name": "off"
       }
     ]
   }

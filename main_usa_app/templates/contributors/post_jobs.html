@@ -1,0 +1,108 @@
+{% load static %}
+{% include 'contributors/contributor_sidebar.html' %}
+{% block content %}
+  
+  <section class="p-4 sm:ml-64" style="height: 100%;">
+    <h1 class="sm:text-3xl text-2xl font-medium title-font mb-4 text-gray-900">Post Jobs</h1>
+    <div class="container px-5 py-24 mx-auto flex">
+      <form method="post" action="{% url 'post_job' user.id %}" enctype="multipart/form-data">
+        {% csrf_token %}
+        
+        <div>
+          <label class="text-xl mb-7 place-content-center" for="image">Upload A Thumbnail:</label><br>
+          <input name="image" class="file-upload-input mb-7 rounded-md" type="file" accept="image/*"><br>
+    
+          <label for="job_title" class="mb-7 text-xl">Job Title:</label><br>
+          <input type="text" name="job_title" class="shadow-sm border-2 border border-black-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 mb-7" required>
+    
+          <label for="location" class="mb-7 text-xl">Location:</label><br>
+          <input type="text" name="location" class="shadow-sm border-2 border border-black-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 mb-7">
+          
+          <label for="salary" class="mb-7 text-xl">Salary:</label><br>
+          <input type="text" name="salary" class="shadow-sm border-2 border border-black-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 mb-7">
+          
+          <label for="hours" class="mb-7 text-xl">Hours:</label><br>
+          <input type="number" name="hours" class="shadow-sm border-2 border border-black-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 mb-7">
+          
+          <label for="last_date" class="mb-7 text-xl">Last Date:</label><br>
+          <input type="date" name="last_date" class="shadow-sm border-2 border border-black-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 mb-7">
+          
+          <!-- Additional fields... -->
+
+          <label class="text-xl" for="job_type">Job Type:</label><br>
+          <select class="mb-7 rounded-md p-2 border-2 border-black-300" name="job_type" id="job_type" required>
+              <option value="" selected>Choose</option>
+              {% for choice in job_type_choices %}
+                  <option value="{{ choice.0 }}">{{ choice.1 }}</option>
+              {% endfor %}
+          </select>
+          <br>
+
+          <label class="text-xl" for="categories">Categories:</label><br>
+          <select class="mb-7 rounded-md p-2 border-2 border-black-300" name="categories" id="categories" required>
+              <option value="" selected>Choose</option>
+              {% for choice in categories_choices %}
+                  <option value="{{ choice.0 }}">{{ choice.1 }}</option>
+              {% endfor %}
+          </select>
+          <br>
+
+          <label class="text-xl" for="mode">Mode:</label><br>
+          <select class="mb-7 rounded-md p-2 border-2 border-black-300" name="mode" id="mode" required>
+              <option value="" selected>Choose</option>
+              {% for choice in mode_choices %}
+                  <option value="{{ choice.0 }}">{{ choice.1 }}</option>
+              {% endfor %}
+          </select>
+          <br>
+
+          <label class="text-xl" for="time">Time Choice:</label><br>
+          <select class="mb-7 rounded-md p-2 border-2 border-black-300" name="time" id="time" required>
+              <option value="" selected>Choose</option>
+              {% for choice in time_choices %}
+                  <option value="{{ choice.0 }}">{{ choice.1 }}</option>
+              {% endfor %}
+          </select>
+          <br>
+
+          <label class="text-xl" for="distypes">Disability Types:</label><br>
+          <select class="mb-7 rounded-md p-2 border-2 border-black-300" name="distype" id="">
+            <option value="">Choose</option>
+            {% for dtype in disability_types %}
+              <option value="{{ dtype.id }}">{{ dtype.name }}</option>
+            {% endfor %}
+          </select>
+          <br>
+          {% if companies is None %}
+            <a href="{% url 'add_company' user.id %}" style="color: red;">Add Company</a>
+          {% else %}
+            <label class="text-xl" for="disability_types">Company Name: <span style="color: red;">{{companies.name}}</span></label><br>
+          {% endif %}
+          <br>
+          <br>
+          <!-- Additional fields... -->
+
+          <h1 class="text-xl">Content:</h1>
+          <textarea name="about" id="editor" class="mt-1 p-2 border rounded-md w-full"></textarea>
+        
+          <label class="text-xl" for="is_published">Publish Job:</label><br>
+          <input type="checkbox" name="is_published" id="is_published">
+          <br>
+        </div>
+        <br>
+        <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Post Job</button>
+      </form>
+    </div>
+  </section>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.2.0/flowbite.min.js"></script>
+
+  <script>
+    console.log("CKEditor initialization script executed");
+    ClassicEditor
+      .create(document.querySelector('#editor'))
+      .catch(error => {
+        console.error(error);
+      });
+  </script>
+{% endblock %}

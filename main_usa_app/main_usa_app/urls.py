@@ -18,12 +18,17 @@ from django.contrib import admin
 from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
+from usa.views import index
 
 from django.contrib.auth import views as auth_views
 
 urlpatterns = [
     path("admin/", admin.site.urls),
-    path('', include('usa.urls')),
+    path('', index, name='index'),  # Add the landing page path
+    path('jobseeker/', include('jobseeker.urls')),    # jobseeker url
+    path('contributor/', include('contributor.urls')),  # contributor url
+    path('usa/', include('usa.urls', namespace='usa')),                   # main page or landing page url
+    
     path('ckeditor/', include('ckeditor_uploader.urls')),
 
     path('reset_password/', auth_views.PasswordResetView.as_view(template_name="registrations/reset_password.html"),

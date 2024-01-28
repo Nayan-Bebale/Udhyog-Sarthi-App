@@ -1,0 +1,132 @@
+{% load usa_tags %}
+{% load static %}
+
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>UdyogSarthi</title>
+    <link rel="icon" type="image/x-icon" href="{% static 'img/icon-deal-1.png' %}">
+
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <meta content="" name="keywords">
+    <meta content="" name="description">
+
+    <!-- Favicon -->
+    <link href="{% static 'img/favicon.ico' %}" rel="icon">
+    <link rel="icon" href="{% static 'img/icon-deal-1' %}" type="image/icon type">
+
+
+    <!-- Google Web Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;600&family=Inter:wght@700;800&display=swap" rel="stylesheet">
+    
+    <!-- Icon Font Stylesheet -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
+        
+
+    <!-- Libraries Stylesheet -->
+    <link href="{% static 'lib/animate/animate.min.css' %}" rel="stylesheet">
+    <link href="{% static 'lib/owlcarousel/assets/owl.carousel.min.css' %}" rel="stylesheet">
+
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet">
+
+    <!-- Customized Bootstrap Stylesheet -->
+    <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
+    <link href="https://cdn.lineicons.com/4.0/lineicons.css" rel="stylesheet" />
+
+
+    <link href="{% static 'css/style.css' %}" rel="stylesheet">
+    <link href="{% static 'css/customThemeClass.css' %}" rel="stylesheet">
+</head>
+
+<body>
+   <div class="sidebar" style="color: var(--primary);">
+      <div class="d-flex flex-column flex-shrink-0 p-3 bg-body-tertiary" style=" width: 280px; height: 100vh; margin-right: 20px;">
+          <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-body-emphasis text-decoration-none">
+            <img src="{% static 'img/icon-deal.png' %}" alt="logo" style="width: 200px; margin-left: 5px;">
+          </a>
+          <hr>
+          <ul class="nav nav-pills flex-column mb-auto">
+            <li class="nav-item">
+              <form class="d-flex" action="/search/">
+                <input class="form-control me-2" type="search" placeholder="Search" name="q" aria-label="Search">
+                <button class="btn btn-outline-success" type="submit">Search</button>
+              </form>
+            </li>
+            <br>
+            <li class="nav-item">
+              <a href="{% url 'profile' user.id %}" class="nav-link active" aria-current="page">
+                <i class="bi bi-house" style="margin-right: 10px;"></i>
+                Home
+              </a>
+            </li>
+            <li>
+              <a href="{% url 'jobseeker_jobs' user.id %}" class="nav-link link-body-emphasis">
+                <i class="bi bi-briefcase" style="margin-right: 10px;"></i>
+                Jobs
+              </a>
+            </li>
+            <li>
+              <a href="{% url 'blogs_jobseekers' user.id %}" class="nav-link link-body-emphasis">
+                <i class="bi bi-journal" style="margin-right: 10px;"></i>
+                Blogs
+              </a>
+            </li>
+            <li>
+              <a href="#" class="nav-link link-body-emphasis">
+                <i class="bi bi-book" style="margin-right: 10px;"></i>
+                Courses
+              </a>
+            </li>
+            <li>
+              <a href="#" class="nav-link link-body-emphasis">
+                <i class="bi bi-heart-fill" style="margin-right: 10px;"></i>
+                Supports
+              </a>
+            </li>
+            <li class="mb-1">
+               <div class="d-flex justify-content-center align-items-center" >
+               <select name="type" id="theme-selector"
+                    style="background-color: var(--primary); border: none; margin: 8px 0; padding: 10px 15px; font-size: 13px; border-radius: 8px; width: 100%; outline: none;">
+                    <option value="theme1">Normal</option>
+                      <option value="theme2">Orange</option>
+                      <option value="theme3">Blue</option>
+                      <option value="theme4">Parple</option>
+                      <option value="custom">Custom Theme</option>
+                </select>
+               </div>
+             </li>
+            <li>
+               
+            
+            </li>
+          </ul>
+          <hr>
+          {% with job_seeker=request.user.jobseeker %}
+            <div class="dropdown">
+              <a href="{% url 'user_profile' user.id %}" class="d-flex align-items-center link-body-emphasis text-decoration-none dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                <img src="{{ job_seeker.profileimg.url }}" alt="" width="32" height="32" class="rounded-circle me-2">
+                <strong>{{ request.user.username }}</strong>
+              </a>
+              <ul class="dropdown-menu text-small shadow">
+                <li><a class="dropdown-item" href="{% url 'list_save_job' user.id %}">My Job Status</a></li>
+                <li><a class="dropdown-item" href="#">My Learning</a></li>
+                <li><a class="dropdown-item" href="{% url 'edit_jobseeker_profile' user.id %}">Setting</a></li>
+                <li><a class="dropdown-item" href="{% url 'user_profile' user.id %}">Profile</a></li>
+                <li><hr class="dropdown-divider"></li>
+                <li><a class="dropdown-item" href="{% signout_url %}">Sign out</a></li>
+              </ul>
+            </div>
+          {% endwith %}
+
+        </div>
+      
+      </div>
+
+   
+   

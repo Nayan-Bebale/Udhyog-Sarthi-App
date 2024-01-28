@@ -1,0 +1,56 @@
+{% load static %}
+{% include 'contributors/contributor_sidebar.html' %}
+{% block content %}
+
+<section class="p-4 sm:ml-64">
+    <h1 class="sm:text-3xl text-2xl font-medium title-font mb-4 text-gray-900">Jobs Desktop</h1>
+    <div style="margin: 20px 15px;">
+        <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
+            <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+                <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                    <tr>
+                        <th scope="col" class="px-6 py-3">
+                            Job Title
+                        </th>
+                        <th scope="col" class="px-6 py-3">
+                            Last Date
+                        </th>
+                        <th scope="col" class="px-6 py-3">
+                            Number of Applicants
+                        </th>
+                        <th scope="col" class="px-6 py-3">
+                            Price
+                        </th>
+                        <th scope="col" class="px-6 py-3">
+                            <span class="sr-only">Edit</span>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for job in jobs_with_applicants_count %}
+                        <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                            <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                                <a href="{% url 'job_detail' job_id=job.job_id user_id=user.id %}">{{job.job_title}}</a>
+                            </th>
+                            <td class="px-6 py-4">
+                                {{job.last_date}}
+                            </td>
+                            <td class="px-6 py-4">
+                                {{ job.num_applicants }}
+                            </td>
+                            <td class="px-6 py-4">
+                                {{ job.salary }}
+                            </td>
+                            <td class="px-6 py-4 text-right">
+                                <a href="#" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit</a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</section>
+
+
+{% endblock %}

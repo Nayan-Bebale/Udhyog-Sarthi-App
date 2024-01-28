@@ -1,0 +1,52 @@
+{% load static %}
+{% include 'contributors/contributor_sidebar.html' %}
+{% block content %}
+
+<section class="p-4 sm:ml-64">
+    <h1 class="sm:text-3xl text-2xl font-medium title-font mb-4 text-gray-900">Jobs Desktop</h1>
+    <div style="margin: 20px 15px;">
+        <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
+            <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+                <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                    <tr>
+                        <th scope="col" class="px-6 py-3">
+                            Name
+                        </th>
+                        <th scope="col" class="px-6 py-3">
+                            Appled Date
+                        </th>
+                        <th scope="col" class="px-6 py-3">
+                            resume
+                        </th>
+                        <th scope="col" class="px-6 py-3">
+                            email
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for applicant in applicants  %}
+                    <a href="#">
+                        <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                            <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                                {{applicant.name}}
+                            </th>
+                            <td class="px-6 py-4">
+                                {{applicant.timestamp}}
+                            </td>
+                            <td class="px-6 py-4">
+                                <a href="{{ applicant.resume.url }}" target="_blank">View Resume</a>
+                            </td>
+                            <td class="px-6 py-4">
+                                {{ applicant.email }}
+                            </td>
+                        </tr>
+                    </a>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</section>
+
+
+{% endblock %}

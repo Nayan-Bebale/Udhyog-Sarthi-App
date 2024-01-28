@@ -1,4 +1,5 @@
 {% load static %}
+{% load usa_tags %}
 
 <!DOCTYPE html>
 <html lang="en">
@@ -35,17 +36,16 @@
     <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
 
     <link href="{% static 'css/style.css' %}" rel="stylesheet">
-    <link href="{% static 'css/customThemeClass.css' %}" rel="stylesheet">
 </head>
 
 <body>
     <div class="container-xxl bg-white p-0">
         <!-- Spinner Start -->
-        <!-- <div id="spinner" class="show bg-white position-fixed translate-middle w-100 vh-100 top-50 start-50 d-flex align-items-center justify-content-center">
+        <div id="spinner" class="show bg-white position-fixed translate-middle w-100 vh-100 top-50 start-50 d-flex align-items-center justify-content-center">
             <div class="spinner-border text-primary" style="width: 3rem; height: 3rem;" role="status">
                 <span class="sr-only">Loading...</span>
             </div>
-        </div> -->
+        </div>
         <!-- Spinner End -->
 
 
@@ -61,28 +61,19 @@
                 <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
                     <span class="navbar-toggler-icon"></span>
                 </button>
-                <div class="d-flex justify-content-center align-items-center">
-                    <!-- <div class="d-flex gap-4">
-                        <input type="checkbox" class="btn-check" id="white-theme-checkbox" autocomplete="off">
-                        <label class="btn btn-outline-primary" for="white-theme-checkbox">White</label>
-                    </div>
-                    <div class="d-flex gap-4">
-                        <input type="checkbox" class="btn-check" id="blue-theme-checkbox" autocomplete="off">
-                        <label class="btn btn-outline-primary" for="blue-theme-checkbox">Blue</label>
-                    </div>
-                    <div class="d-flex gap-4">
-                        <input type="checkbox" class="btn-check" id="yellow-theme-checkbox" autocomplete="off">
-                        <label class="btn btn-outline-primary" for="yellow-theme-checkbox">Yellow</label>
-                    </div> -->
-                    <select id="theme-selector">
-                        <option value="theme1">Theme 1</option>
-                        <option value="theme2">Theme 2</option>
-                        <option value="theme3">Theme 3</option>
-                        <option value="custom">Custom Theme</option>
-                        <!-- Add more themes as needed -->
-                      </select>
-                      
+                
+                <div class="d-flex justify-content-center align-items-center" >
+                    <select name="type" id="theme-selector"
+                         style="background-color: var(--primary); border: none; margin: 8px 0; padding: 10px 15px; font-size: 13px; border-radius: 8px; width: 100%; outline: none;">
+                         <option value="theme1">Normal</option>
+                           <option value="theme2">Orange</option>
+                           <option value="theme3">Blue</option>
+                           <option value="theme4">Parple</option>
+                           <option value="custom">Custom Theme</option>
+                    </select>
                 </div>
+                      
+            
                 <div class="d-flex p-4 justify-content-between align-items-center">
                     <button class="btn btn-sm btn-medium p-2 px-3 py-2 rounded-md text-black bg-gray-700 hover:bg-gray-800 hover-text-black" id="increase-font-size">A+</button>
                     <button class="btn btn-sm btn-medium p-2 px-3 py-2 rounded-md text-black bg-gray-700 hover:bg-gray-800 hover-text-black" id="decrease-font-size">A-</button>
@@ -90,25 +81,25 @@
                 <div class="collapse navbar-collapse" id="navbarCollapse">
                     <div class="navbar-nav ms-auto">
                         <a href="/" class="nav-item nav-link active">Home</a>
-                        <a href="/about" class="nav-item nav-link">About</a>
+                        <a href="{% url 'usa:about' %}" class="nav-item nav-link">About</a>
                         <div class="nav-item dropdown">
                             <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Jobs</a>
                             <div class="dropdown-menu rounded-0 m-0">
-                                <a href="/property-list" class="dropdown-item">Jobs List</a>
-                                <a href="/property-type" class="dropdown-item">Jobs Type</a>
-                                <a href="/property-agent" class="dropdown-item">Jobs Agent</a>
+                                <a href="{% url 'usa:property_list' %}" class="dropdown-item">Jobs List</a>
+                                <a href="{% url 'usa:property_type' %}" class="dropdown-item">Jobs Type</a>
+                                <a href="{% url 'usa:property_agent' %}" class="dropdown-item">Jobs Agent</a>
                             </div>
                         </div>
                         <div class="nav-item dropdown">
                             <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Content</a>
                             <div class="dropdown-menu rounded-0 m-0">
-                                <a href="/blogs" class="dropdown-item">Blogs</a>
-                                <a href="/courses" class="dropdown-item">Courses</a>
+                                <a href="{% url 'usa:blogs' %}" class="dropdown-item">Blogs</a>
+                                <a href="{% url 'usa:courses' %}" class="dropdown-item">Courses</a>
                             </div>
                         </div>
-                        <a href="{% url 'contect' %}" class="nav-item nav-link">Contact</a>
+                        <a href="{% url 'usa:contect' %}" class="nav-item nav-link">Contact</a>
                     </div>
-                    <a href="/login" class="btn btn-primary px-3 d-none d-lg-flex">Login/Sigin</a>
+                    <a href="{% url 'usa:login' %}" class="btn btn-primary px-3 d-none d-lg-flex">Login/Sigin</a>
                 </div>
             </nav>
         </div>

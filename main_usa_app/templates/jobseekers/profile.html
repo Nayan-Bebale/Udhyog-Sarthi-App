@@ -1,0 +1,114 @@
+{% load static %}
+
+{% include 'jobseekers/jobseeker_sidebar.html' %}
+
+<div class="main-content">
+<div class="container-fluid header bg-white p-0" id="main-section">
+    <div class="row g-0 align-items-center flex-column-reverse flex-md-row">
+        <div class="col-md-6 p-5 mt-lg-5">
+            <h1 class="display-5 animated fadeIn mb-4">Find A <span class="text-primary" style="color: #007056;">Perfect Job</span> To work With Your Gift</h1>
+            <p class="animated fadeIn mb-4 pb-2" style="color: #007056; font-weight: 800;">दिव्य क्षमता, असीमित संभावना.</p>
+            <a href="/property-list" class="btn btn-primary py-3 px-5 me-3 animated fadeIn">Get Started</a>
+        </div>
+        <div class="col-md-6 animated fadeIn">
+            <div class="owl-carousel header-carousel">
+                <div class="owl-carousel-item">
+                    <img class="img" src="{% static 'img/carousel-1.jpg' %}" alt="banner-Image-1">
+                </div>
+                <div class="owl-carousel-item">
+                    <img class="img-fluid" src="{% static 'img/carousel-2.jpg' %}" alt="banner-Image-2">
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+
+
+        <div class="container-xxl py-5">
+        <div class="container">
+            <div class="row g-0 gx-5 align-items-end">
+                <div class="col-lg-6">
+                    <div class="text-start mx-auto mb-5 wow slideInLeft" data-wow-delay="0.1s">
+                        <h1 class="mb-3">List of City and jobs</h1>
+                        <p>Eirmod sed ipsum dolor sit rebum labore magna erat. Tempor ut dolore lorem kasd vero ipsum sit eirmod sit diam justo sed rebum.</p>
+                    </div>
+                </div>
+                
+            </div>
+                    <div class="tab-class text-center wow fadeInUp" data-wow-delay="0.3s">
+                        <div class="tab-content">
+                            <div id="tab-1" class="tab-pane fade show p-0 active">
+                                {% for i in jobs|slice:"6" %}
+                                    <div class="job-item p-4 mb-4">
+                                        <div class="row g-4">
+                                            <div class="col-sm-12 col-md-8 d-flex align-items-center">
+                                                <img class="flex-shrink-0 img-fluid border rounded" src="{{i.image.url}}" alt="" style="width: 80px; height: 80px;">
+                                                <div class="text-start ps-4">
+                                                    <h5 class="mb-3">{{i.job_title}}</h5>
+                                                    <span class="text-truncate me-3"><i class="fa fa-map-marker-alt text-primary me-2"></i>{{i.location}}</span>
+                                                    <span class="text-truncate me-3"><i class="far fa-clock text-primary me-2"></i>{{i.hours}} hours</span>
+                                                    <span class="text-truncate me-0"><i class="far fa-money-bill-alt text-primary me-2"></i>₹ {{i.salary}}</span>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-12 col-md-4 d-flex flex-column align-items-start align-items-md-end justify-content-center">
+                                                <div class="d-flex mb-3">
+                                                    <a class="btn btn-light btn-square me-3" href="{% url 'save_job' user_id=user.id job_id=i.job_id %}"><i class="far fa-heart text-primary"></i></a>
+                                                    {% if i.job_id not in applied_jobs %}
+                                                        <p>{{job}}</p>
+                                                        <a class="btn btn-primary" href="{% url 'show_details_jobs' user_id=user.id job_id=i.job_id %}">Apply Now</a>
+                                                    {% else %}
+                                                        <a class="btn btn-primary" href="#">Appled!</a>
+                                                    {% endif %}
+                                                </div>
+                                                <small class="text-truncate">Last Date<i class="far fa-calendar-alt text-primary me-2" style="margin-left: 5px;"></i>{{i.last_date}}</small>
+                                            </div>
+                                        </div>
+                                    </div>
+                            {% endfor %}
+                                <a class="btn btn-primary py-3 px-5" href="{% url 'jobseeker_jobs' user.id %}">Browse More Jobs</a>
+                            </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Jobs End -->
+
+
+            <a href="#" class="btn btn-lg btn-primary btn-lg-square back-to-top"><i class="bi bi-arrow-up"></i></a>
+        </div>
+
+        <div class="container-xxl py-5">
+            <div class="container">
+                <div class="row g-0 gx-5 align-items-end">
+                    <div class="col-lg-6">
+                        <div class="text-start mx-auto mb-5 wow slideInLeft" data-wow-delay="0.1s">
+                            <h2 class="mb-3">New Blogs </h2>
+                        </div>
+                    </div>
+                <div class="owl-carousel testimonial-carousel wow fadeInUp" data-wow-delay="0.1s">
+                    {% for blog in blogs|slice:"6" %}
+                    <a href="{% url 'blog_details_jobseeker' blogid=blog.id_blog user_id=user.id %}">
+                        <div class="testimonial-item bg-light rounded p-3">
+                            <div class="bg-white border rounded p-4">
+                                <p>{{blog.abstraction|linebreaks|truncatechars:30}}</p>
+                                <div class="d-flex align-items-center">
+                                    <img class="img-fluid flex-shrink-0 rounded" src="{{ blog.tumbnail.url }}" style="width: 45px; height: 45px;" alt="testimonial-Image">
+                                    <div class="ps-3">
+                                        <h6 class="fw-bold mb-1">{{blog.title}}</h6>
+                                        <small>{{blog.user}}</small>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+</div>
+   
+
+  
+  <!-- Modal -->
+
+
+{% include 'jobseekers/jobseeker_footer.html' %}

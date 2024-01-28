@@ -6,6 +6,15 @@ from ckeditor.fields import RichTextField
 from os import getcwd
 
 # Create your models here.
+    
+class Companies(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='company_profile')
+    name = models.CharField(max_length=300)
+    description = RichTextField()
+    industry_type = models.CharField(max_length=50, blank=True, null=True)
+    logo = models.ImageField(upload_to='company_logos/', blank=True, null=True)
+    url = models.URLField(max_length=200, blank=True, null=True)
+
 
 class Job(models.Model):
     job_id = models.AutoField(primary_key=True)
@@ -42,9 +51,13 @@ class Job(models.Model):
     disability_types = models.ManyToManyField('DisabilityType', related_name='jobs', blank=True)
     salary = models.DecimalField(max_digits=10, decimal_places=2)
     hours = models.PositiveIntegerField()
-    about = models.TextField()
-    day_ago = models.PositiveIntegerField()
-    image = models.ImageField(upload_to='job_images/', default=f'{getcwd()}\\main_usa_app\\main_usa_app\\main_usa_app\\media\\default_job_banner.jpg')
+    about = RichTextField()
+    updated_at = models.DateTimeField(auto_now=True)
+    company = models.ForeignKey(Companies, on_delete=models.CASCADE, related_name='jobs', default=None)
+    last_date = models.DateField(blank=True, null=True)
+    is_published = models.BooleanField(default=False)
+    is_closed = models.BooleanField(default=False)
+    image = models.ImageField(upload_to='job_images/', default='default_job_banner.jpg')
     posted_by = models.ForeignKey('auth.User', on_delete=models.CASCADE)
     print(f"current directory {getcwd()}")
 
@@ -90,7 +103,6 @@ class SaveJobs(models.Model):
 
     def __str__(self):
         return f"{self.user.username} saved {self.job.job_title}"
-
 
 
 # Course Model
@@ -150,8 +162,7 @@ class Lecture(models.Model):
     video_url = models.URLField()
     description = RichTextField()
     sequence_order = models.PositiveIntegerField()
-    created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
+    
 
     def __str__(self):
         return f"{self.course.title} - Lecture {self.sequence_order}: {self.title}"
@@ -180,4 +191,20 @@ class Blogs(models.Model):
     tumbnail = models.ImageField(upload_to='blogs_images/', default='default_blogs.jpg')
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+
+
+class Applicant(models.Model):
+
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    job = models.ForeignKey(Job, on_delete=models.CASCADE)
+    name = models.CharField(max_length=100)
+    email = models.EmailField()
+    resume = models.FileField(upload_to='applicant_resumes/', blank=True)
+    timestamp = models.DateTimeField(auto_now=True, auto_now_add=False)
+
+
+    def __str__(self):
+        return f"{self.name} applied for {self.job.job_title}"
+    
+
 

@@ -1,0 +1,42 @@
+{% load static %}
+{% include 'contributors/contributor_sidebar.html' %}
+{% block content %}
+
+<section class="p-4 sm:ml-64" style="height: 100%;">
+    <h1 class="sm:text-3xl text-2xl font-medium title-font mb-4 text-gray-900">Add Company</h1>
+    <div class="container px-5 py-24 mx-auto flex">
+      <form method="post" action="{% url 'add_company' user.id %}" enctype="multipart/form-data">
+        {% csrf_token %}
+        <label for="logo" class="text-xl mb-7">Company Logo:</label><br>
+        <input name="logo" class="file-upload-input mb-7 rounded-md" type="file" accept="image/*">
+        <br>
+        <label for="name" class="mb-7 text-xl">Company Name:</label><br>
+        <input type="text" name="name" class="shadow-sm border-2 border border-black-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 mb-7" required>
+        <br>
+        <label for="industry_type" class="mb-7 text-xl">Industry Type:</label><br>
+        <input type="text" name="industry_type" class="shadow-sm border-2 border border-black-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 mb-7">
+        <br>
+        <label for="url" class="mb-7 text-xl">Company URL:</label><br>
+        <input type="url" name="url" class="shadow-sm border-2 border border-black-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 mb-7">
+        <br>
+        <h1 class="text-xl">Descriptions:</h1>
+        <textarea name="description" id="editor" class="mt-1 p-2 border rounded-md w-full"></textarea>
+        </div>
+      
+        <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Add Company</button>
+      </form>
+    </div>
+  </section>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.2.0/flowbite.min.js"></script>
+
+  <script>
+    console.log("CKEditor initialization script executed");
+    ClassicEditor
+      .create(document.querySelector('#editor'))
+      .catch(error => {
+        console.error(error);
+      });
+  </script>
+{% endblock %}
+

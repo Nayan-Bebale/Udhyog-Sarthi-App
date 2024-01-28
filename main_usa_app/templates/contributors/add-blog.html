@@ -6,7 +6,7 @@
   <section class="p-4 sm:ml-64" style="height: 100%;">
     <h1 class="sm:text-3xl text-2xl font-medium title-font mb-4 text-gray-900">Post Blogs</h1>
     <div class="container px-5 py-24 mx-auto flex">
-      <form method="post" action="{% url 'post_blog' %}" enctype="multipart/form-data">
+      <form method="post" action="{% url 'post_blog' user.id %}" enctype="multipart/form-data">
         {% csrf_token %}
         <div>
           <label class="text-xl mb-7 place-content-center" for="image">Upload A Thumbnail:</label><br>

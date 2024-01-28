@@ -2,20 +2,23 @@ document.getElementById('theme-selector').addEventListener('change', function() 
     const selectedTheme = this.value;
   
     switch (selectedTheme) {
-      case 'theme1':
-        setThemeVariables('#ffffff', '#333333', '#ff5733');
-        break;
-      case 'theme2':
-        setThemeVariables('#e6e6e6', '#444444', '#3498db');
-        break;
+        case 'theme1':
+            setThemeVariables('#00B98E', '#FF6922', '#EFFDF5');
+            break;  
+        case 'theme2':
+            setThemeVariables('#ffffff', '#333333', '#ff5733');
+            break;
         case 'theme3':
-        setThemeVariables('#294B29', '#50623A', '#789461');
-      // Add more cases for additional themes
-  
-      // Add a case for your new theme
-      case 'custom':
-        setThemeVariables('#030637', '#3C0753', '#720455', '#910A67');
-        break;
+            setThemeVariables('#e6e6e6', '#444444', '#3498db');
+            break;
+            case 'theme4':
+            setThemeVariables('#294B29', '#50623A', '#789461');
+        // Add more cases for additional themes
+    
+        // Add a case for your new theme
+        case 'custom':
+            setThemeVariables('#030637', '#3C0753', '#720455', '#910A67');
+            break;
     }
   });
 
