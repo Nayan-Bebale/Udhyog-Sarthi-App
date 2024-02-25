@@ -42,6 +42,7 @@
       {
         "aria-progressbar-name": "off"
       }
-    ]
+    ],
+    "button-type": "off"
   }
 }

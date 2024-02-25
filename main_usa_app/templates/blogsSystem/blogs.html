@@ -1,8 +1,9 @@
+{% load static %}
 {% include 'header.html' %}
       <!--Blog Categories-->
       <!--Interview Experiences-->
       <!-- Search Start -->
-        <div class="container-fluid bg-primary mb-5 wow fadeIn" data-wow-delay="0.1s" style="padding: 35px;">
+        <!-- <div class="container-fluid bg-primary mb-5 wow fadeIn" data-wow-delay="0.1s" style="padding: 35px;">
             <div class="container">
                 <div class="row g-2">
                     <div class="col-md-10">
@@ -33,7 +34,7 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </div> -->
         <!-- Search End -->
         
         <main class="container">
@@ -177,12 +178,12 @@
                   <p class="blog-post-meta">December 14, 2020 by <a href="#">Chris</a></p>
           
                   <p>This is some additional paragraph placeholder content. It has been written to fill the available space and show how a longer snippet of text affects the surrounding content. We'll repeat it often to keep the demonstration flowing, so be on the lookout for this exact same string of text.</p>
-                  <ul>
-                    <li>First list item</li>
-                    <li>Second list item with a longer description</li>
-                    <li>Third list item to close it out</li>
-                  </ul>
                   <p>This is some additional paragraph placeholder content. It's a slightly shorter version of the other highly repetitive body text used throughout.</p>
+                  <video width="420" height="340" controls>
+                    <source src="{% static 'video/SIH.mp4' %}" type="video/mp4">
+                    <source src="SIH.ogg" type="video/ogg">
+                  Your browser does not support the video tag.
+                  </video>
                 </article>
           
                 <nav class="blog-pagination" aria-label="Pagination">
@@ -227,11 +228,13 @@
                 </div>
           
                   <div class="p-4">
-                    <h4 class="fst-italic">Elsewhere</h4>
+                    <h4 class="fst-italic">Main Diability Categories</h4>
                     <ol class="list-unstyled">
-                      <li><a href="#">GitHub</a></li>
-                      <li><a href="#">Twitter</a></li>
-                      <li><a href="#">Facebook</a></li>
+                      <li><a href="{% url 'usa:blog_by_type' categories='a' %}">Categories:A Blindness and low vision</a></li>
+                      <li><a href="{% url 'usa:blog_by_type' categories='b' %}">Categories:B Deaf and Hard of Hearing</a></li>
+                      <li><a href="{% url 'usa:blog_by_type' categories='c' %}">Categories:C Locomotor disabilities</a></li>
+                      <li><a href="{% url 'usa:blog_by_type' categories='d' %}">Categories:D Autism, intellectual..</a></li>
+                      <li><a href="{% url 'usa:blog_by_type' categories='e' %}">Categories:E Multiple disabilities</a></li>
                     </ol>
                   </div>
                 </div>

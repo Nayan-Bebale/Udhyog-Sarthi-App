@@ -1,4 +1,5 @@
-{% include 'header.html' %}
+{% include 'jobseekers/jobseeker_sidebar.html' %}
+<div class="main-content">
   {% for blog in blogs %}
     <section class="text-gray-600 body-font" style="margin-top: 5px;">
         <div class="container px-5 py-24 mx-auto flex flex-col border-2 border-dotted border-black">
@@ -17,4 +18,4 @@
       </section>
     {% endfor %}
    
-{% include 'footer.html' %}
+{% include 'jobseekers/jobseeker_footer.html' %}

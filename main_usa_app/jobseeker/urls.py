@@ -14,5 +14,6 @@ urlpatterns = [
     path('<int:user_id>/blogs/', views.blogs_jobseekers, name="blogs_jobseekers"),
     path('<int:user_id>/blogs/blog-detail/<int:blogid>/', views.blog_details_jobseeker, name="blog_details_jobseeker"),
     path('<int:user_id>/blogs/<int:year>/<int:month>/', views.blog_by_month, name='blog_by_month'),
-
+    path('<int:user_id>/disable-blog/<str:categories>', views.blog_by_type_jobseeker, name="blog_by_type_jobseeker"),
+    path('<int:user_id>/main_dis_type/<str:name>', views.main_dis_type_jobseeker, name="main_dis_type_jobseeker"),
 ]

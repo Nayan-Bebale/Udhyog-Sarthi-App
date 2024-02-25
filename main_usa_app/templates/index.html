@@ -26,38 +26,23 @@
 
 
         <!-- Search Start -->
-        <!-- <div class="container-fluid bg-primary mb-5 wow fadeIn" data-wow-delay="0.1s" style="padding: 35px;">
+        <div class="container-fluid bg-primary mb-5 wow fadeIn" data-wow-delay="0.1s" style="padding: 35px;">
             <div class="container">
-                <div class="row g-2">
-                    <div class="col-md-10">
-                        <div class="row g-2">
-                            <div class="col-md-4">
-                                <input type="text" class="form-control border-0 py-3" placeholder="job title, Keywords">
-                            </div>
-                            <div class="col-md-4">
-                                <select class="form-select border-0 py-3">
-                                    <option selected>City or postcode</option>
-                                    <option value="1">Indore</option>
-                                    <option value="2">Delhi</option>
-                                    <option value="3">Bhopla</option>
-                                </select>
-                            </div>
-                            <div class="col-md-4">
-                                <select class="form-select border-0 py-3">
-                                    <option selected>All Categories</option>
-                                    <option value="1">Human Resource</option>
-                                    <option value="2">Marketing</option>
-                                    <option value="3">Project Management</option>
-                                </select>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-2">
-                        <button class="btn btn-dark border-0 w-100 py-3">Find jobs</button>
-                    </div>
+                <div class="row height d-flex justify-content-center align-items-center">
+
+                <div class="col-md-8">
+                    <form action="/search/">
+                        <div class="search">
+                            <i class="fa fa-search"></i>
+                            <input type="text" class="form-control" name="q" placeholder="Find Jobs">
+                            <button class="btn btn-primary">Search</button>
+                          </div>
+                    </form>
                 </div>
+                    
+                  </div>
             </div>
-        </div> -->
+        </div> 
         <!-- Search End -->
 
         <div class="container-xxl py-5">
@@ -84,10 +69,10 @@
                                         </div>
                                         <div class="p-4 pb-0">
                                             <h5><a class="text-primary mb-2" href=""></a></h5>
-                                            <h5 class="d-block h6 mb-2">₹ {{ job.salary }} /month</h5>
+                                            <h5 class="d-block h6 mb-2" style="color: var(--light);">₹ {{ job.salary }} /month</h5>
                                             
                                             <p class="d-block  mb-1"><i class="fa fa-map-marker-alt text-primary me-2"></i>{{ job.location }}</p>
-                                            
+                                            <p class="d-block  mb-1"><i class="fa fa-sharp fa-light fa-city text-primary me-2"></i>{{ job.company.name }}</p>
                                         </div>
                                         <a href="{% url 'usa:login' %}">
                                             <div class="d-flex border-top">
@@ -306,13 +291,6 @@
             </div>
         </div>
         <!-- About End -->
-
-
-        <!-- Jobs List Start -->
-        
-        <!-- Jobs List End -->
-
-        
         <!-- Our Services -->
         <div class="container-xxl py-5">
             <div class="container">
@@ -464,7 +442,7 @@
                     <div class="col-lg-3 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
                         <div class="team-item rounded overflow-hidden">
                             <div class="position-relative">
-                                <img class="img-fluid" src="img/team-1.jpg" alt="">
+                                <img class="img-fluid" src="{% static 'img/team-1.jpg' %}" alt="">
                                 <div class="position-absolute start-50 top-100 translate-middle d-flex align-items-center">
                                     <a class="btn btn-square mx-1" href=""><i class="fab fa-facebook-f"></i></a>
                                     <a class="btn btn-square mx-1" href=""><i class="fab fa-twitter"></i></a>
@@ -472,15 +450,15 @@
                                 </div>
                             </div>
                             <div class="text-center p-4 mt-3">
-                                <h5 class="fw-bold mb-0">Full Name</h5>
-                                <small>Designation</small>
+                                <h5 class="fw-bold mb-0">Kiyara</h5>
+                                <small>H.R.</small>
                             </div>
                         </div>
                     </div>
                     <div class="col-lg-3 col-md-6 wow fadeInUp" data-wow-delay="0.3s">
                         <div class="team-item rounded overflow-hidden">
                             <div class="position-relative">
-                                <img class="img-fluid" src="img/team-2.jpg" alt="">
+                                <img class="img-fluid" src="{% static 'img/team-2.jpg' %}" alt="">
                                 <div class="position-absolute start-50 top-100 translate-middle d-flex align-items-center">
                                     <a class="btn btn-square mx-1" href=""><i class="fab fa-facebook-f"></i></a>
                                     <a class="btn btn-square mx-1" href=""><i class="fab fa-twitter"></i></a>
@@ -488,15 +466,15 @@
                                 </div>
                             </div>
                             <div class="text-center p-4 mt-3">
-                                <h5 class="fw-bold mb-0">Full Name</h5>
-                                <small>Designation</small>
+                                <h5 class="fw-bold mb-0">Ranbir</h5>
+                                <small>CEO</small>
                             </div>
                         </div>
                     </div>
                     <div class="col-lg-3 col-md-6 wow fadeInUp" data-wow-delay="0.5s">
                         <div class="team-item rounded overflow-hidden">
                             <div class="position-relative">
-                                <img class="img-fluid" src="img/team-3.jpg" alt="">
+                                <img class="img-fluid" src="{% static 'img/team-3.jpg' %}" alt="">
                                 <div class="position-absolute start-50 top-100 translate-middle d-flex align-items-center">
                                     <a class="btn btn-square mx-1" href=""><i class="fab fa-facebook-f"></i></a>
                                     <a class="btn btn-square mx-1" href=""><i class="fab fa-twitter"></i></a>
@@ -504,8 +482,8 @@
                                 </div>
                             </div>
                             <div class="text-center p-4 mt-3">
-                                <h5 class="fw-bold mb-0">Full Name</h5>
-                                <small>Designation</small>
+                                <h5 class="fw-bold mb-0">PriyaDarshni</h5>
+                                <small>H.R</small>
                             </div>
                         </div>
                     </div>
@@ -520,8 +498,8 @@
                                 </div>
                             </div>
                             <div class="text-center p-4 mt-3">
-                                <h5 class="fw-bold mb-0">Full Name</h5>
-                                <small>Designation</small>
+                                <h5 class="fw-bold mb-0">Akshay</h5>
+                                <small>H.R</small>
                             </div>
                         </div>
                     </div>

@@ -21,6 +21,9 @@
                         <th scope="col" class="px-6 py-3">
                             email
                         </th>
+                        <th scope="col" class="px-6 py-3">
+                            select
+                        </th>
                     </tr>
                 </thead>
                 <tbody>
@@ -38,6 +41,15 @@
                             </td>
                             <td class="px-6 py-4">
                                 {{ applicant.email }}
+                            </td>
+                            <td class="px-6 py-4">
+                                <!-- create here select box here -->
+                                <form action="" method="post">
+                                    {% csrf_token %}
+                                    <input type="checkbox" id="selected" name="selected" {% if job.applicant.selected %}checked{% endif %}>
+                                    <label for="selected">Select</label><br>
+                                    <button type="submit" style="color: black; font-weight: bold;">Save</button>
+                                </form>
                             </td>
                         </tr>
                     </a>

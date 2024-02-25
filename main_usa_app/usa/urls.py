@@ -1,5 +1,6 @@
 from django.urls import path
 from . import views
+from searches.views import search_view
 
 app_name = 'usa'
 

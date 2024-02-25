@@ -150,6 +150,7 @@
                 <li>Third list item to close it out</li>
               </ul>
               <p>This is some additional paragraph placeholder content. It's a slightly shorter version of the other highly repetitive body text used throughout.</p>
+            
             </article>
       
             <nav class="blog-pagination" aria-label="Pagination">
@@ -193,14 +194,16 @@
                 </ol>
             </div>
       
-              <div class="p-4">
-                <h4 class="fst-italic">Elsewhere</h4>
-                <ol class="list-unstyled">
-                  <li><a href="#">GitHub</a></li>
-                  <li><a href="#">Twitter</a></li>
-                  <li><a href="#">Facebook</a></li>
-                </ol>
-              </div>
+            <div class="p-4">
+              <h4 class="fst-italic">Main Diability Categories</h4>
+              <ol class="list-unstyled">
+                <li><a href="{% url 'blog_by_type_jobseeker' categories='a' user_id=user.id %}">Categories:A Blindness and low..</a></li>
+                <li><a href="{% url 'blog_by_type_jobseeker' categories='b' user_id=user.id %}">Categories:B Deaf and Hard..</a></li>
+                <li><a href="{% url 'blog_by_type_jobseeker' categories='c' user_id=user.id %}">Categories:C Locomotor disabilities</a></li>
+                <li><a href="{% url 'blog_by_type_jobseeker' categories='d' user_id=user.id %}">Categories:D Autism, intellectual..</a></li>
+                <li><a href="{% url 'blog_by_type_jobseeker' categories='e' user_id=user.id %}">Categories:E Multiple disabilities</a></li>
+              </ol>
+            </div>
             </div>
           </div>
         </div>

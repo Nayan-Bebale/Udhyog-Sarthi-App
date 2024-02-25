@@ -5,7 +5,7 @@ from django.forms import inlineformset_factory
 from .forms import JobApplicationForm
 from django import forms
 
-from usa.models import Job, JobSeeker, SaveJobs, Applicant, Blogs
+from usa.models import Job, JobSeeker, SaveJobs, Applicant, Blogs, DisabilityType
 from django.db.models.functions import TruncMonth
 
 from django.contrib.auth import authenticate, logout
@@ -21,6 +21,7 @@ from django.urls import reverse
 ####################################### Jobseeker Profile ###################
 
 def profile(request, user_id):
+    print(request.user)
     if request.user.is_authenticated and JobSeeker.objects.filter(user=request.user).exists():
         published_jobs = Job.objects.filter(is_published=True).order_by('-updated_at')
         jobs = published_jobs.filter(is_closed=False)
@@ -158,7 +159,7 @@ def delete_save_job(request, job_id, user_id):
     if save_job:
         save_job.delete()
 
-    return redirect('list_save_job', user_id=user.id)
+    return redirect('list_save_job', user_id=request.user.id)
 
 @login_required(login_url='login')
 def show_details_jobs(request, job_id, user_id):
@@ -170,14 +171,14 @@ def show_details_jobs(request, job_id, user_id):
             # Check if the user has already applied for this job
             if Applicant.objects.filter(user=request.user, job=job).exists():
                 messages.error(request, "You have already applied for this job.")
-                return redirect('show_details_jobs', job_id=job_id)
+                return redirect('show_details_jobs', job_id=job_id, user_id=request.user.id)
             
             # If not, save the application
             applicant = form.save(commit=False)
             applicant.user = request.user
             applicant.job = job
             applicant.save()
-            return redirect('show_details_jobs', job_id=job_id)
+            return redirect('show_details_jobs',job_id=job_id,user_id=request.user.id)
     else:
         form = JobApplicationForm()
 
@@ -194,6 +195,7 @@ def blogs_jobseekers(request, user_id):
     context = {
         "blogs":Blogs.objects.all(),
         "blogs_archive": Blogs.objects.annotate(month=TruncMonth('created_at')).values('month').distinct(),
+        "user_id": request.user.id,
     }
     template_name = "jobseekers/blogSystem/blogs.html"
     return render(request, template_name, context)
@@ -215,6 +217,40 @@ def blog_by_month(request, year, month, user_id):
         "month_name": date,  # For displaying the month name in the template
     }
     template_name = "jobseekers/blogSystem/blog_months.html"  # Assuming a separate template for monthly view
+    return render(request, template_name, context, user_id=request.user.id)
+
+
+@login_required(login_url='login')  
+def blog_by_type_jobseeker(request, categories, user_id):
+    blogs = DisabilityType.objects.filter(categories=categories)
+
+    if categories == 'a':
+        title = 'Categories:A Blindness and low vision'
+    elif categories == 'b':
+        title = 'Categories:B Deaf and Hard of Hearing'
+    elif categories == 'c':
+        title = 'Categories:C Locomotor disabilities'
+    elif categories == 'd':
+        title = 'Categories:D Autism, intellectual disability, specific learning disability, and mental illness'
+    elif categories == 'e':
+        title = 'Categories:E Multiple disabilities'
+
+    template_name = "jobseekers/blogSystem/specific_type.html"
+    context = {
+        'blogs':blogs,
+        'title': title,
+        'user_id':request.user.id,
+    }
     return render(request, template_name, context)
 
-    
+
+def main_dis_type_jobseeker(request, name, user_id):
+    blogs = DisabilityType.objects.filter(name=name)
+
+    template_name = "jobseekers/blogSystem/main_disable.html"
+    context = {
+        'blogs':blogs,
+        'user_id':request.user.id,
+    }
+    return render(request, template_name, context)
+

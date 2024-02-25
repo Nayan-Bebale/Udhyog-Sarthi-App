@@ -1,12 +1,12 @@
 from django.db import models
 from django.utils import timezone
 from django.contrib.auth.models import User
-
 from ckeditor.fields import RichTextField
 from os import getcwd
-
+from django.db.models import Q
 # Create your models here.
     
+
 class Companies(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='company_profile')
     name = models.CharField(max_length=300)
@@ -14,6 +14,43 @@ class Companies(models.Model):
     industry_type = models.CharField(max_length=50, blank=True, null=True)
     logo = models.ImageField(upload_to='company_logos/', blank=True, null=True)
     url = models.URLField(max_length=200, blank=True, null=True)
+
+
+class JobQuerySet(models.QuerySet):
+    def published(self):
+        return self.filter(is_published__lte=True)
+    
+    def search(self, query):
+        lookup = (
+            Q(job_title__icontains=query) |
+            Q(location__icontains=query) |
+            Q(job_type__icontains=query) |
+            Q(time__icontains=query) |
+            Q(company__name__icontains=query)
+        )
+        return self.filter(lookup)
+    
+    def user_post(self, user):
+        return self.filter(posted_by=user)
+    
+
+    
+class JobManager(models.Manager):
+    def get_queryset(self):
+        return JobQuerySet(self.model, using=self._db)
+    
+    def published(self):
+        return self.get_queryset().published()
+    
+    def search(self, query=None):
+        if query is None:
+            return self.get_queryset().none()
+        return self.get_queryset().search(query)
+    
+    def user_posts(self, user):
+        return self.get_queryset().user_post(user)
+
+    
 
 
 class Job(models.Model):
@@ -61,7 +98,7 @@ class Job(models.Model):
     posted_by = models.ForeignKey('auth.User', on_delete=models.CASCADE)
     print(f"current directory {getcwd()}")
 
-
+    objects = JobManager()
 
     def __str__(self):
         return self.job_title
@@ -166,6 +203,7 @@ class Lecture(models.Model):
 
     def __str__(self):
         return f"{self.course.title} - Lecture {self.sequence_order}: {self.title}"
+
 
 
 class Blogs(models.Model):

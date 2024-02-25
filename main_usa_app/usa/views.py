@@ -30,7 +30,8 @@ symbols = ['_', '@']
 
 def index(request):
     print(request.user)
-    jobs = Job.objects.all()
+    published_jobs = Job.objects.filter(is_published=True).order_by('-updated_at')
+    jobs = published_jobs.filter(is_closed=False)
     no_marketing = len(Job.objects.filter(job_type='marketing'))
     no_design = len(Job.objects.filter(job_type='design'))
     no_development = len(Job.objects.filter(job_type='development'))
@@ -81,17 +82,17 @@ def signup(request):
         # Check if the username contains '@' or '_'
         if not any(char in symbols for char in username):
             messages.error(request, "Username must contain '@' or '_'")
-            return redirect('login')
+            return redirect('usa:login')
 
         # Check if the user already exists
         elif User.objects.filter(username=username).exists():
             messages.error(request, 'A user with this username already exists.')
-            return redirect('login')  # Replace 'signup' with the name of your sign-up URL
+            return redirect('usa:login')  # Replace 'signup' with the name of your sign-up URL
 
         # Check if passwords match
         elif password != password2:
             messages.error(request, "Passwords do not match. Please recheck.")
-            return redirect('login')
+            return redirect('usa:login')
 
 
         # Create a new user
@@ -102,19 +103,19 @@ def signup(request):
         if user_type == 'jobseeker':
             # Create a jobseeker profile or perform other actions as needed
             JobSeeker.objects.create(user=user)
-            return redirect('profile')
+            return redirect('profile', user_id=user.id)
         
         elif user_type == 'contributor':
             # Create a contributor profile or perform other actions as needed
             Contributor.objects.create(user=user)
-            return redirect('contributor')
+            return redirect('contributor', user_id=user.id)
         elif user_type == 'parent':
             # Create a parent profile or perform other actions as needed
             
-            return redirect('index')
+            return redirect('usa:index')
 
         messages.success(request, 'Account created successfully. You can now sign in.')
-        return redirect('login')  # Replace 'signin' with the name of your sign-in URL
+        return redirect('usa:login')  # Replace 'signin' with the name of your sign-in URL
 
     else:
         return render(request, 'login.html')  # Replace 'login.html' with the actual path to your login template

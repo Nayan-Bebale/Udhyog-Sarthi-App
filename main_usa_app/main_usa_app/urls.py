@@ -21,6 +21,7 @@ from django.conf.urls.static import static
 from usa.views import index
 
 from django.contrib.auth import views as auth_views
+from searches.views import search_view
 
 urlpatterns = [
     path("admin/", admin.site.urls),
@@ -28,7 +29,7 @@ urlpatterns = [
     path('jobseeker/', include('jobseeker.urls')),    # jobseeker url
     path('contributor/', include('contributor.urls')),  # contributor url
     path('usa/', include('usa.urls', namespace='usa')),                   # main page or landing page url
-    
+    path('search/', search_view, name="search_view"),
     path('ckeditor/', include('ckeditor_uploader.urls')),
 
     path('reset_password/', auth_views.PasswordResetView.as_view(template_name="registrations/reset_password.html"),
