@@ -22,7 +22,7 @@ from django.db.models import Count
 
 # Create your views here.
 
-@login_required(login_url='login')
+@login_required(login_url='usa:login')
 def contributor(request, user_id):
     if request.user.is_authenticated and Contributor.objects.filter(user=request.user).exists():
         published_jobs = Job.objects.filter(is_published=True).order_by('-updated_at')
@@ -35,7 +35,7 @@ def contributor(request, user_id):
     else:
         return redirect('index')
 
-@login_required(login_url='login')
+@login_required(login_url='usa:login')
 def edit_contributor_profile(request, user_id):
     user_profile = Contributor.objects.get(user=request.user)
 
@@ -58,14 +58,14 @@ def edit_contributor_profile(request, user_id):
     template_name = "contributors/edit-contributor-profile.html"
     return render(request, template_name, context)
 
-@login_required(login_url='login')
+@login_required(login_url='usa:login')
 def blog_post_list_view(request, user_id):
     obj = Blogs.objects.filter(user=request.user)
     context = {"object": obj}
     template_name = "contributors/blog_post_list.html"
     return render(request, template_name, context)
 
-@login_required(login_url='login')
+@login_required(login_url='usa:login')
 def post_blog(request, user_id):
     if request.method == 'POST':
         title = request.POST['title']

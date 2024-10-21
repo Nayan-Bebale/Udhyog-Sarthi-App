@@ -120,6 +120,7 @@ def signup(request):
     else:
         return render(request, 'login.html')  # Replace 'login.html' with the actual path to your login template
 
+
 def signin(request):
     if request.method == 'POST':
         name = request.POST['name']

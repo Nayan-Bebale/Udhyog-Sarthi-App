@@ -6,19 +6,16 @@ document.getElementById('theme-selector').addEventListener('change', function() 
             setThemeVariables('#00B98E', '#FF6922', '#EFFDF5');
             break;  
         case 'theme2':
-            setThemeVariables('#ffffff', '#333333', '#ff5733');
+            setThemeVariables('#3498db', '#f1c40f', '#f9f9f9');
             break;
         case 'theme3':
-            setThemeVariables('#e6e6e6', '#444444', '#3498db');
+            setThemeVariables('#2ecc71', '#9b59b6', '#e5e5e5');
             break;
-            case 'theme4':
-            setThemeVariables('#294B29', '#50623A', '#789461');
-        // Add more cases for additional themes
-    
-        // Add a case for your new theme
-        case 'custom':
-            setThemeVariables('#030637', '#3C0753', '#720455', '#910A67');
-            break;
+        case 'theme4':
+            setThemeVariables('#e74c3c', '#2c3e50', '#ccc');
+        // case 'custom':
+        //     setThemeVariables('#030637', '#3C0753', '#720455', '#910A67');
+        //     break;
     }
   });
 
