@@ -16,7 +16,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.admin.views.decorators import staff_member_required
 from django.urls import reverse
 
-
+from datetime import datetime
 
 ####################################### Jobseeker Profile ###################
 
@@ -69,6 +69,15 @@ def edit_jobseeker_profile(request, user_id):
         location = request.POST.get('location', user_profile.location)
         city = request.POST.get('city', user_profile.city)
 
+        # Ensure dob is converted to the format YYYY-MM-DD
+        if dob:
+            try:
+                dob = datetime.strptime(dob, '%B %d, %Y - %H:%M:%S').strftime('%Y-%m-%d')
+            except ValueError:
+                pass
+
+        print(dob)
+
         user_profile.username = username
         user_profile.bio = bio
         user_profile.profileimg = image
@@ -81,7 +90,8 @@ def edit_jobseeker_profile(request, user_id):
         user_profile.city = city
         user_profile.save()
 
-        return redirect('edit_jobseeker_profile')
+        # Pass the user_id when redirecting
+        return redirect('edit_jobseeker_profile', user_id=user_id)
 
     context = {
         'user_profile': user_profile,

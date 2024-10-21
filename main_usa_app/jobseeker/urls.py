@@ -17,3 +17,4 @@ urlpatterns = [
     path('<int:user_id>/disable-blog/<str:categories>', views.blog_by_type_jobseeker, name="blog_by_type_jobseeker"),
     path('<int:user_id>/main_dis_type/<str:name>', views.main_dis_type_jobseeker, name="main_dis_type_jobseeker"),
 ]
+
