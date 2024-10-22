@@ -30,8 +30,8 @@ cd Udhyog-Sarthi-App
 On **Windows**:
 
 ```bash
-python -m venv venv
-venv\Scripts\activate
+python -m venv env
+env\Scripts\activate
 ```
 
 On **Linux/Mac**:
