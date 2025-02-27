@@ -45,6 +45,8 @@
         </div> 
         <!-- Search End -->
 
+
+        <!-- Job ch -->
         <div class="container-xxl py-5">
             <div class="container">
                 <div class="row g-0 gx-5 align-items-end">
@@ -61,27 +63,29 @@
                         <div class="row g-4">
                             {% for job in jobs|slice:":6" %}
                             
-                                <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
-                                    <div class="property-item rounded overflow-hidden" style="background-color: var(--dark);">
-                                        <div class="position-relative overflow-hidden">
-                                            <a href=""><img class="img-fluid" src="{{job.image.url}}" alt="card-Image"></a>
-                                            <div class="bg-white rounded-top text-primary position-absolute start-0 bottom-0 mx-4 pt-1 px-3">{{ job.job_title }}</div>
-                                        </div>
-                                        <div class="p-4 pb-0">
-                                            <h5><a class="text-primary mb-2" href=""></a></h5>
-                                            <h5 class="d-block h6 mb-2" style="color: var(--light);">₹ {{ job.salary }} /month</h5>
-                                            
-                                            <p class="d-block  mb-1"><i class="fa fa-map-marker-alt text-primary me-2"></i>{{ job.location }}</p>
-                                            <p class="d-block  mb-1"><i class="fa fa-sharp fa-light fa-city text-primary me-2"></i>{{ job.company.name }}</p>
-                                        </div>
-                                        <a href="{% url 'usa:login' %}">
-                                            <div class="d-flex border-top">
-                                                <small class="flex-fill text-center border-end py-3">View details<i class="fa fa-duotone fa-arrow-right text-primary me-2" style="margin-left: 3%;"></i></small>
-                                            </div>
-                                        </a>
-                                        
+                            <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.1s" style="background-color: var(--light);">
+                                <div class="property-item rounded overflow-hidden">
+                                    <div class="position-relative overflow-hidden">
+                                        <a href=""><img class="img-fluid" src="{{job.image.url}}" alt="card-Image"></a>
+                                        <div class="bg-white rounded-top text-primary position-absolute start-0 bottom-0 mx-4 pt-1 px-3">{{ job.job_title }}</div>
                                     </div>
+                                    <div class="p-4 pb-0">
+                                        <h5><a class="text-primary mb-2" href=""></a></h5>
+                                        <h5 class="d-block h6 mb-2" style="color: var(--dark);">₹ {{ job.salary }} /month</h5>
+                                        <p class="d-block mb-1"><i class="fa fa-map-marker-alt text-primary me-2"></i>{{ job.location }}</p>
+                                        <p class="d-block mb-1"><i class="fa fa-sharp fa-light fa-city text-primary me-2"></i>{{ job.company.name }}</p>
+                                    </div>
+                                    <!-- Add a "Listen" button -->
+                                    <button onclick="speakJob('{{ job.job_title }}', '{{ job.salary }}', '{{ job.location }}', '{{ job.company.name }}')" class="btn btn-sm btn-primary" style="margin-left: 10px;">
+                                        Listen
+                                    </button>
+                                    <a href="{% url 'usa:login' %}">
+                                        <div class="d-flex border-top">
+                                            <small class="flex-fill text-center border-end py-3" style="color: var(--dark);">View details<i class="fa fa-duotone fa-arrow-right text-primary me-2" style="margin-left: 3%;"></i></small>
+                                        </div>
+                                    </a>
                                 </div>
+                            </div>
                             {% endfor %}
 
                             <div class="col-12 text-center wow fadeInUp" data-wow-delay="0.1s">
@@ -93,18 +97,19 @@
                 </div>
             </div>
         </div>
-        
+        <!-- end job -->
 
         <br>
         
         <!-- Category Start  diability type -->
-        <div class="container-xxl py-5">
+        <div class="container-xxl py-5" id="blogs">
             <div class="container">
                 <div class="text-center mx-auto mb-5 wow fadeInUp" data-wow-delay="0.1s" style="max-width: 600px;">
                     <h1 class="mb-3">Browse for Divyangjan</h1>
-                    <p>2020 jobs live - 293 added today.</p>
+                    <p>2025 jobs live - 293 added today.</p>
                 </div>
                 <div class="row g-4">
+                    <!-- Category A -->
                     <div class="col-lg-3 col-sm-6 wow fadeInUp" data-wow-delay="0.1s" style="margin-left: 10%;">
                         <a class="cat-item d-block bg-light text-center rounded p-3" href="{% url 'usa:blog_by_type' categories='a' %}">
                             <div class="rounded p-4">
@@ -116,6 +121,7 @@
                             </div>
                         </a>
                     </div>
+                    <!-- Category B -->
                     <div class="col-lg-3 col-sm-6 wow fadeInUp" data-wow-delay="0.3s">
                         <a class="cat-item d-block bg-light text-center rounded p-3" href="{% url 'usa:blog_by_type' categories='b' %}">
                             <div class="rounded p-4">
@@ -127,6 +133,7 @@
                             </div>
                         </a>
                     </div>
+                    <!-- Category C -->
                     <div class="col-lg-3 col-sm-6 wow fadeInUp" data-wow-delay="0.5s">
                         <a class="cat-item d-block bg-light text-center rounded p-3" href="{% url 'usa:blog_by_type' categories='c' %}">
                             <div class="rounded p-4">
@@ -138,6 +145,7 @@
                             </div>
                         </a>
                     </div>
+                    <!-- Category D -->
                     <div class="col-lg-3 col-sm-6 wow fadeInUp" data-wow-delay="0.3s" style="margin-left: 20%;">
                         <a class="cat-item d-block bg-light text-center rounded p-3" href="{% url 'usa:blog_by_type' categories='d' %}">
                             <div class="rounded p-4">
@@ -149,8 +157,7 @@
                             </div>
                         </a>
                     </div>
-                    
-                    
+                    <!-- Category E -->
                     <div class="col-lg-3 col-sm-6 wow fadeInUp" data-wow-delay="0.1s">
                         <a class="cat-item d-block bg-light text-center rounded p-3" href="{% url 'usa:blog_by_type' categories='e' %}">
                             <div class="rounded p-4">
@@ -158,12 +165,16 @@
                                     <img class="img-fluid" src="{% static 'dis_img/img-5.jpg' %}" alt="Icon">
                                 </div>
                                 <h6>Categories E</h6>
-                                <span>(More than one)</span>
+                                <span>(More than <br>one)</span>
                             </div>
                         </a>
                     </div>
-                        
-    
+                </div>
+                <!-- Add a "Read All Categories" button -->
+                <div class="text-center mb-4">
+                    <button onclick="readAllCategories()" class="btn btn-primary">
+                        Read All Categories
+                    </button>
                 </div>
             </div>
         </div>

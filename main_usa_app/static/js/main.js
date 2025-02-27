@@ -1,31 +1,64 @@
+// Font size increase and decrease
+// Default font size in pixels
+const DEFAULT_FONT_SIZE = 16; // Adjust this to match your default font size
+
+// Function to change font size
+function changeFontSize(step) {
+    const htmlElement = document.documentElement;
+    const currentSize = parseFloat(window.getComputedStyle(htmlElement).fontSize);
+    const newSize = currentSize + step;
+    htmlElement.style.fontSize = `${newSize}px`;
+}
+
+// Function to reset font size to default
+function resetFontSize() {
+    document.documentElement.style.fontSize = `${DEFAULT_FONT_SIZE}px`;
+}
+
+// Event listeners for buttons
+document.getElementById('increase-font-size').addEventListener('click', () => {
+    changeFontSize(2); // Increase font size by 2px
+});
+
+document.getElementById('decrease-font-size').addEventListener('click', () => {
+    changeFontSize(-2); // Decrease font size by 2px
+});
+
+document.getElementById('reset-font-size').addEventListener('click', () => {
+    resetFontSize(); // Reset font size to default
+});
+
+
+
 document.getElementById('theme-selector').addEventListener('change', function() {
     const selectedTheme = this.value;
   
     switch (selectedTheme) {
         case 'theme1':
-            setThemeVariables('#00B98E', '#FF6922', '#EFFDF5');
+            setThemeVariables('#00B98E', '#FF6922', '#EFFDF5', '#0E2E50'); // High Contrast Black & White
             break;  
         case 'theme2':
-            setThemeVariables('#3498db', '#f1c40f', '#f9f9f9');
+            setThemeVariables('#FFFFFF', '#000000', '#000000', '#FFFFFF'); // High Contrast White & Black
             break;
         case 'theme3':
-            setThemeVariables('#2ecc71', '#9b59b6', '#e5e5e5');
+            setThemeVariables('#1E90FF', '#FFD700', '#F0F8FF', '#00008B'); // High Contrast Blue & Gold
             break;
         case 'theme4':
-            setThemeVariables('#e74c3c', '#2c3e50', '#ccc');
-        // case 'custom':
-        //     setThemeVariables('#030637', '#3C0753', '#720455', '#910A67');
-        //     break;
+            setThemeVariables('#8B0000', '#FFA07A', '#FFE4E1', '#8B0000'); // High Contrast Red & Light Coral
+            break;
+        case 'theme5':
+            setThemeVariables('#006400', '#ADFF2F', '#F0FFF0', '#006400'); // High Contrast Green & Green Yellow
+            break;
     }
-  });
+});
 
-  function setThemeVariables(primaryColor, secondaryColor, lightColor, darkColor) {
+
+function setThemeVariables(primaryColor, secondaryColor, lightColor, darkColor) {
     document.documentElement.style.setProperty('--primary', primaryColor);
     document.documentElement.style.setProperty('--secondary', secondaryColor);
     document.documentElement.style.setProperty('--light', lightColor);
     document.documentElement.style.setProperty('--dark', darkColor);
-  }
-
+}
 
 (function ($) {
     "use strict";
