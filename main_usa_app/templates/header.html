@@ -21,12 +21,13 @@
     <!-- Google Web Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;600&family=Inter:wght@700;800&display=swap" rel="stylesheet">
-    
+    <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;600&family=Inter:wght@700;800&display=swap"
+        rel="stylesheet">
+
     <!-- Icon Font Stylesheet -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
-        
+
 
     <!-- Libraries Stylesheet -->
     <link href="{% static 'lib/animate/animate.min.css' %}" rel="stylesheet">
@@ -36,12 +37,14 @@
     <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
 
     <link href="{% static 'css/style.css' %}" rel="stylesheet">
+
 </head>
 
 <body>
     <div class="container-xxl bg-white p-0">
         <!-- Spinner Start -->
-        <div id="spinner" class="show bg-white position-fixed translate-middle w-100 vh-100 top-50 start-50 d-flex align-items-center justify-content-center">
+        <div id="spinner"
+            class="show bg-white position-fixed translate-middle w-100 vh-100 top-50 start-50 d-flex align-items-center justify-content-center">
             <div class="spinner-border text-primary" style="width: 3rem; height: 3rem;" role="status">
                 <span class="sr-only">Loading...</span>
             </div>
@@ -54,30 +57,32 @@
             <nav class="navbar navbar-expand-lg bg-white navbar-light py-0 px-4">
                 <a href="/" class="navbar-brand d-flex align-items-center text-center">
                     <div class="icon p-2 me-2">
-                        <img class="img-fluid" src="{% static 'img/icon-deal.png' %}" alt="Icon" style="width: 201px; height: 55px;">
+                        <img class="img-fluid " src="{% static 'img/icon-deal.png' %}" alt="Icon"
+                            style="width: 201px; height: 55px;">
                     </div>
                     <h1 class="m-0 text-primary"></h1>
                 </a>
                 <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
                     <span class="navbar-toggler-icon"></span>
                 </button>
-                
-                <div class="d-flex justify-content-center align-items-center" >
+
+                <div class="d-flex justify-content-center align-items-center">
                     <select name="type" id="theme-selector"
-                         style="background-color: var(--primary); border: none; margin: 8px 0; padding: 10px 15px; font-size: 13px; border-radius: 8px; width: 100%; outline: none;">
-                         <option value="theme1">Normal</option>
-                           <option value="theme2">Orange</option>
-                           <option value="theme3">Blue</option>
-                           <option value="theme4">Parple</option>
-                           <option value="custom">Custom Theme</option>
+                        style="background-color: var(--primary); border: none; margin: 8px 0; padding: 10px 15px; font-size: 13px; border-radius: 8px; width: 100%; outline: none;">
+                        <option value="theme1">Normal</option>
+                        <option value="theme2">Orange</option>
+                        <option value="theme3">Blue</option>
+                        <option value="theme4">Parple</option>
+                        <option value="custom">Custom Theme</option>
                     </select>
                 </div>
-                      
-            
+
+
                 <div class="d-flex p-4 justify-content-between align-items-center">
                     <button class="btn btn-sm btn-medium p-2 px-3 py-2 rounded-md text-black bg-gray-700 hover:bg-gray-800 hover-text-black" id="increase-font-size">A+</button>
                     <button class="btn btn-sm btn-medium p-2 px-3 py-2 rounded-md text-black bg-gray-700 hover:bg-gray-800 hover-text-black" id="decrease-font-size">A-</button>
                 </div>
+
                 <div class="collapse navbar-collapse" id="navbarCollapse">
                     <div class="navbar-nav ms-auto">
                         <a href="/" class="nav-item nav-link active">Home</a>
@@ -104,3 +109,21 @@
             </nav>
         </div>
         <!-- Navbar End -->
+
+        <!-- Font size increase and decrease -->
+
+        <script>
+            let fontSize = 16; 
+    
+            document.getElementById("increase-font-size").addEventListener("click", function () {
+                fontSize += 2; 
+                document.body.style.fontSize = fontSize + "px"; 
+            });
+    
+            document.getElementById("decrease-font-size").addEventListener("click", function () {
+                if (fontSize > 10) { 
+                    fontSize -= 2; 
+                    document.body.style.fontSize = fontSize + "px"; 
+                }
+            });
+        </script>
