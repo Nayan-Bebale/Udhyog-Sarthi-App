@@ -6,3 +6,5 @@ importlib
 django-ckeditor
 Pillow
 colorama
+django-ckeditor
+python-dotenv

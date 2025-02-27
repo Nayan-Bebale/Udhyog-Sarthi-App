@@ -30,15 +30,15 @@ cd Udhyog-Sarthi-App
 On **Windows**:
 
 ```bash
-python -m venv venv
-venv\Scripts\activate
+python -m venv env
+env\Scripts\activate
 ```
 
 On **Linux/Mac**:
 
 ```bash
-python3 -m venv venv
-source venv/bin/activate
+python3 -m venv env
+source env/bin/activate
 ```
 
 ### 3. Install dependencies
