@@ -170,6 +170,7 @@
                         </a>
                     </div>
                 </div>
+                <br>
                 <!-- Add a "Read All Categories" button -->
                 <div class="text-center mb-4">
                     <button onclick="readAllCategories()" class="btn btn-primary">
@@ -393,29 +394,30 @@
             </div>
         </div>
 
+        <!-- Map system -->
         <div class="container-xxl py-5">
             <div class="container">
                 <div class="row g-5 align-items-center">
                     <div class="col-lg-6 wow fadeIn" data-wow-delay="0.1s">
-                        <div class="mapouter">
-                            <div class="gmap_canvas" style="margin-top: 16px;">
-                                <iframe src="https://www.google.com/maps/embed?pb=!1m12!1m8!1m3!1d520507.6754183792!2d80.134095922251!3d13.015314351735734!3m2!1i1024!2i768!4f13.1!2m1!1sngo%20near%20me%20for%20disabled%20people!5e0!3m2!1sen!2sin!4v1702906567121!5m2!1sen!2sin" frameborder="0" scrolling="no" style="width: 390px; height: 330px; padding: 5px;">
-                                </iframe><style>.mapouter{position:relative;height:330px;width:390px;background:#fff;} .maprouter a{color:#fff !important;position:absolute !important;top:0 !important;z-index:0 !important;}</style><a href="https://blooketjoin.org/blooket-login/">blooket login</a><style>.gmap_canvas{overflow:hidden;height:330px;width:390px}.gmap_canvas iframe{position:relative;z-index:2}</style>
-                            </div>
-                        </div>
-
+                        <!-- Map Container -->
+                        <div id="map" style="height: 400px; width: 100%; margin-top: 16px;"></div>
+                        <p id="status" style="margin-top: 10px; font-size: 14px; color: #555;"></p>
+                        <ul id="ngoList" style="list-style: none; padding: 0; margin-top: 10px;"></ul>
                     </div>
                     <div class="col-lg-6 wow fadeIn" data-wow-delay="0.5s">
-                        <h1 class="mb-4">#1 Place To Find The Perfect Jobs</h1>
-                        <p class="mb-4">Tempor erat elitr rebum at clita. Diam dolor diam ipsum sit. Aliqu diam amet diam et eos. Clita erat ipsum et lorem et sit, sed stet lorem sit clita duo justo magna dolore erat amet</p>
-                        <p><i class="fa fa-check text-primary me-3"></i>Tempor erat elitr rebum at clita</p>
-                        <p><i class="fa fa-check text-primary me-3"></i>Aliqu diam amet diam et eos</p>
-                        <p><i class="fa fa-check text-primary me-3"></i>Clita duo justo magna dolore erat amet</p>
-                        <a class="btn btn-primary py-3 px-5 mt-3" href="">Read More</a>
+                        <h1 class="mb-4">#1 Place To Find The Perfect NGOs</h1>
+                        <p class="mb-4">Discover top NGOs in your city that support disabled individuals. Click the button below to find NGOs near you.</p>
+                        <p><i class="fa fa-check text-primary me-3"></i>Find NGOs tailored to your location.</p>
+                        <p><i class="fa fa-check text-primary me-3"></i>View their addresses and locations on the map.</p>
+                        <p><i class="fa fa-check text-primary me-3"></i>Get directions and contact information.</p>
+                        <button class="btn btn-primary py-3 px-5 mt-3" onclick="getLocation()">Find NGOs Near Me</button>
                     </div>
                 </div>
             </div>
         </div>
+
+
+
 
         <!-- Call to Action Start -->
         <div class="container-xxl py-5">
