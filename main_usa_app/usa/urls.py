@@ -30,6 +30,8 @@ urlpatterns = [
     path('disable-blog/<str:categories>', views.blog_by_type, name="blog_by_type"),
     path('main_dis_type/<str:name>', views.main_dis_type, name="main_dis_type"),
 
+    path('chat/', views.chatoption, name='chatoption'),
+
     # Create Course with Lectures
     path('create-course-with-lectures/', views.create_course_with_lectures, name="create_course_with_lectures"),
 ]

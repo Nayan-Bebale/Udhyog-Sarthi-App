@@ -63,6 +63,10 @@ def about(request):
     template_name = "about.html"
     return render(request, template_name)
 
+def chatoption(request):
+    template_name = "chatOption/chat.html"
+    return render(request, template_name)
+
 
 # Login and Signup System starts ###############################
 
