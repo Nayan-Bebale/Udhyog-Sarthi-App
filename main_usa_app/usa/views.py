@@ -29,7 +29,6 @@ symbols = ['_', '@']
 
 
 def index(request):
-    print(request.user)
     published_jobs = Job.objects.filter(is_published=True).order_by('-updated_at')
     jobs = published_jobs.filter(is_closed=False)
     no_marketing = len(Job.objects.filter(job_type='marketing'))
