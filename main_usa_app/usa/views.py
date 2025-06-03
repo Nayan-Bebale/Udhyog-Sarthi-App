@@ -18,6 +18,8 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.admin.views.decorators import staff_member_required
 from django.urls import reverse
 
+from datetime import datetime
+
 
 letters = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z']
 numbers = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9']
@@ -29,6 +31,9 @@ symbols = ['_', '@']
 
 
 def index(request):
+    # Get the current date
+    current_year = datetime.now()
+    year = current_year.year
     published_jobs = Job.objects.filter(is_published=True).order_by('-updated_at')
     jobs = published_jobs.filter(is_closed=False)
     no_marketing = len(Job.objects.filter(job_type='marketing'))
@@ -39,6 +44,8 @@ def index(request):
     no_automotive = len(Job.objects.filter(job_type='automotive'))
     no_data_entry = len(Job.objects.filter(job_type='data_entry'))
     no_call_center = len(Job.objects.filter(job_type='call_center'))
+    no_all_jobs = len(jobs)
+    
     context = {
         'jobs': jobs, 
         'no_marketing': no_marketing,
@@ -49,11 +56,14 @@ def index(request):
         'no_automotive': no_automotive,
         'no_data_entry':no_data_entry,
         'no_call_center':no_call_center,
+        'year': year,
+        'no_all_jobs': no_all_jobs,
     }
     template_name = "index.html"
     return render(request, template_name, context)
 
-    
+
+  
 def contect(request):
     template_name = "contact.html"
     return render(request, template_name)
@@ -170,8 +180,31 @@ def property_agent(request):
     return render(request, template_name)
 
 def property_type(request):
+    published_jobs = Job.objects.filter(is_published=True).order_by('-updated_at')
+    jobs = published_jobs.filter(is_closed=False)
+    no_marketing = len(Job.objects.filter(job_type='marketing'))
+    no_design = len(Job.objects.filter(job_type='design'))
+    no_development = len(Job.objects.filter(job_type='development'))
+    no_customer = len(Job.objects.filter(job_type='customer'))
+    no_health_caare = len(Job.objects.filter(job_type='health_caare'))
+    no_automotive = len(Job.objects.filter(job_type='automotive'))
+    no_data_entry = len(Job.objects.filter(job_type='data_entry'))
+    no_call_center = len(Job.objects.filter(job_type='call_center'))
+
+    context = {
+        'jobs': jobs, 
+        'no_marketing': no_marketing,
+        'no_design': no_design,
+        'no_development': no_development,
+        'no_customer': no_customer,
+        'no_health_caare': no_health_caare,
+        'no_automotive': no_automotive,
+        'no_data_entry':no_data_entry,
+        'no_call_center':no_call_center,
+    }
+
     template_name = "property-type.html"
-    return render(request, template_name)
+    return render(request, template_name, context=context)
 
 def testimonial(request):
     template_name = "testimonial.html"

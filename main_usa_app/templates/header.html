@@ -36,6 +36,9 @@
   <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet" />
 
   <link href="{% static 'css/style.css' %}" rel="stylesheet" />
+
+  <!-- Annyang Library for Speech Recognition -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/annyang/2.6.1/annyang.min.js"></script>
 </head>
 
 <body>
@@ -94,27 +97,33 @@
         <div class="d-flex p-4 justify-content-between align-items-center">
           <button onclick="speakInstructions()" class="btn btn-sm btn-medium p-2 px-3 py-2 rounded-md text-black bg-gray-700 hover:bg-gray-800 hover-text-black">
             <i class="bi bi-megaphone"></i>
-        </button>
+          </button>
+        </div>
+        <!-- Speech Toggle Button -->
+        <div class="d-flex p-4 justify-content-between align-items-center">
+          <button id="speech-toggle" class="btn btn-sm btn-medium p-2 px-3 py-2 rounded-md text-black bg-gray-700 hover:bg-gray-800">
+            <i class="bi bi-mic"></i>
+          </button>
         </div>
         
         <div class="d-flex p-4 justify-content-between align-items-center">
           <button id="chatButton" class="btn btn-sm btn-medium p-2 px-3 py-2 rounded-md text-black bg-gray-700 hover:bg-gray-800">
               <i class="bi bi-chat-dots"></i>
           </button>
-      </div>
+        </div>
       
-      <div class="chat-container" id="chatContainer" style="display: none;">
-        <div class="chat-header">
+        <div class="chat-container" id="chatContainer" style="display: none;">
+          <div class="chat-header">
             <h4>Your Udyog Assistance</h4>
             <button id="closeChat" class="close-btn" style="color: var(--dark);">×</button>
-        </div>
-        <div class="chat-body">
+          </div>
+          <div class="chat-body">
             <ul class="message-content"></ul>
-        </div>
-        <div class="chat-footer">
+          </div>
+          <div class="chat-footer">
             <button class="option-btn" onclick="initializeChat()">Start Chat</button>
+          </div>
         </div>
-    </div>
 
         <div class="collapse navbar-collapse" id="navbarCollapse">
           <div class="navbar-nav ms-auto">
@@ -128,25 +137,14 @@
                 <a href="{% url 'usa:property_agent' %}" class="dropdown-item">Jobs Agent</a>
               </div>
             </div>
-            <div class="nav-item dropdown">
-              <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Content</a>
-              <div class="dropdown-menu rounded-0 m-0">
-                <a href="{% url 'usa:blogs' %}" class="dropdown-item" onclick="navigateTo('blogs')">Blogs</a>
-                <a href="{% url 'usa:courses' %}" class="dropdown-item">Courses</a>
-              </div>
-            </div>
+            <a href="{% url 'usa:blogs' %}" class="nav-item nav-link">Blogs</a>
             <a href="{% url 'usa:contect' %}" class="nav-item nav-link">Contact</a>
           </div>
-          <a href="{% url 'usa:login' %}" class="btn btn-primary px-3 d-none d-lg-flex">Login/Sigin</a>
+          <a href="{% url 'usa:login' %}" class="btn btn-primary px-3 d-none d-lg-flex">Login/Signin</a>
         </div>
       </nav>
     </div>
     <!-- Navbar End -->
-
-    
-
-    <!-- Font size increase and decrease -->
-
   </div>
 </body>
 
